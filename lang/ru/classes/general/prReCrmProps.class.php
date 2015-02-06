@@ -1,0 +1,44 @@
+<?
+$MESS ['PR_RECRM_NAME_COUNTRIES'] 			= 'Страны';
+$MESS ['PR_RECRM_NAME_CITIES'] 				= 'Города';
+$MESS ['PR_RECRM_NAME_DISTRICTS'] 			= 'Районы';
+$MESS ['PR_RECRM_NAME_METROSTATIONS'] 		= 'Станции метро';
+$MESS ['PR_RECRM_NAME_ESTATETYPESGROUP'] 	= 'Типы недвижимости';
+$MESS ['PR_RECRM_NAME_ESTATETYPESLIST'] 	= 'Cписка типов указанной группы';
+$MESS ['PR_RECRM_NAME_ESTATE'] 				= 'Объекты недвижимости';
+$MESS ['PR_RECRM_NAME_AGENT'] 				= 'Агенты';
+$MESS ['PR_RECRM_NAME_CONTRAGENT'] 			= 'Контрагенты';
+$MESS ['PR_RECRM_NAME_REQUEST'] 			= 'Заявки';
+
+$MESS ['PR_RECRM_PROP_ID'] 					= 'ID ReCRM';
+$MESS ['PR_RECRM_PROP_HIDDEN'] 				= 'Является ли объект скрытым';
+$MESS ['PR_RECRM_PROP_NAME_PREPOSITIONAL'] 	= 'Название в Предложном п.';
+$MESS ['PR_RECRM_PROP_HOT'] 				= 'Является ли объект горячим предложением';
+$MESS ['PR_RECRM_PROP_COUNTRY_ID'] 			= 'ID Страна';
+$MESS ['PR_RECRM_PROP_DISTRICT_ID'] 		= 'ID Района';
+$MESS ['PR_RECRM_PROP_METRO_ID'] 			= 'ID Станции метро';
+$MESS ['PR_RECRM_PROP_REGION_ID'] 			= 'ID Регион';
+$MESS ['PR_RECRM_PROP_REGION_DISTRICT_ID'] 	= 'ID Район';
+$MESS ['PR_RECRM_PROP_CITY_ID'] 			= 'ID Город';
+$MESS ['PR_RECRM_PROP_GROUP_ID'] 			= 'ID Группы';
+$MESS ['PR_RECRM_PROP_AGENT_ID'] 			= 'ID Агента';
+$MESS ['PR_RECRM_PROP_METRO_LINE_ID'] 		= 'ID Линия метро';
+$MESS ['PR_RECRM_PROP_EMAIL'] 				= 'E-Mail';
+$MESS ['PR_RECRM_PROP_PHONE'] 				= 'Телефон';
+$MESS ['PR_RECRM_PROP_MOBILE_PHONE'] 		= 'Мобильный телефон';
+$MESS ['PR_RECRM_PROP_POSITION'] 			= 'Позиция';
+$MESS ['PR_RECRM_PROP_ROLE'] 				= 'ID Роль';
+$MESS ['PR_RECRM_PROP_GROUP_NAME'] 			= 'Название группы';
+$MESS ['PR_RECRM_PROP_PHOTO'] 				= 'Фотография';
+$MESS ['PR_RECRM_PROP_ESTATECOVERPHOTO'] 	= 'Главная фотография объекта';
+$MESS ['PR_RECRM_PROP_ESTATEPHOTO'] 		= 'Все фотографии объекта';
+$MESS ['PR_RECRM_PROP_ESTATEPHOTOLAYOUT'] 	= 'Фотографии планировок';
+$MESS ['PR_RECRM_PROP_EDIT_DATE'] 			= 'Дата редактирования d.mm.yyy';
+$MESS ['PR_RECRM_PROP_EDIT_DATETIME'] 		= 'Дата и время редактирования в формате d.MM.yyyy HH:mm.ss';
+$MESS ['PR_RECRM_PROP_LATITUDE'] 			= 'Географическая широта';
+$MESS ['PR_RECRM_PROP_LONGITUDE'] 			= 'Географическая долгота';
+$MESS ['PR_RECRM_PROP_ZOOM'] 				= 'Значение zoom для отображения на карте';			
+$MESS ['PR_RECRM_PROP_META_DESCRIPTION'] 	= 'Описание для страницы объекта (для SEO-оптимизации)';			
+$MESS ['PR_RECRM_PROP_META_KEYWORDS'] 		= 'Ключевые слова для страницы объекта (для SEO-оптимизации)';			
+$MESS ['PR_RECRM_PROP_META_TITLE'] 			= 'Заголовок страницы объекта (для SEO-оптимизации)';		
+?>

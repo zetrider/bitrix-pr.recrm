@@ -1,0 +1,132 @@
+#recrm_map {
+	margin: 10px 0;
+}
+
+.recrm_detail {}
+
+.recrm_detail .item {
+	padding: 20px 0;
+}
+
+.recrm_detail .col_l {
+	float: left;
+	width: 250px;
+}
+.recrm_detail .col_r {
+	width: 100%;
+	float: right;
+}
+
+.recrm_detail .item .col_l .photos {
+	width: 250px;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.recrm_detail .item .col_l .photos .photo_main {
+	width: 250px;
+	height: 200px;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.recrm_detail .item .col_l .photos .photo_child {
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+	float: left;
+	margin: 6px;
+	opacity: .7;
+	-moz-opacity: .7;
+	filter: alpha(opacity=70);
+}
+.recrm_detail .item .col_l .photos .photo_child:hover,
+.recrm_detail .item .col_l .photos .photo_child.active {
+	opacity: 1.0;
+	-moz-opacity: 1.0;
+	filter: alpha(opacity=100);
+}
+.recrm_detail .item .col_l .photos img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.recrm_detail .item .col_l .video {
+	margin-bottom: 10px;
+}
+
+.recrm_detail .item .col_l .agent {
+	margin-bottom: 10px;
+	font-size: 12px;
+}
+.recrm_detail .item .col_l .agent .photo {
+	width: 50px;
+	height: 50px;
+	float: left;
+	overflow: hidden;
+}
+.recrm_detail .item .col_l .agent .photo img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	margin: 0 auto;
+}
+.recrm_detail .item .col_l .agent .info {
+	width: 195px;
+	float: right;
+}
+.recrm_detail .item .col_l .agent .info .name {
+	font-weight: bold;
+	margin: 5px 0;
+}
+.recrm_detail .item .col_l .agent .info .mobile {
+	margin: 5px 0;
+}
+.recrm_detail .item .col_l .agent .info .phone {
+	margin: 5px 0;
+}
+.recrm_detail .item .col_l .agent .info .email {
+	margin: 5px 0;
+}
+
+.recrm_detail .item .title {
+	padding: 5px 0;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.recrm_detail .item .props {
+	padding: 10px 0;
+}
+.recrm_detail .item .props .prop {
+	padding-bottom: 10px;
+}
+.recrm_detail .item .props .prop .p_name {
+	width: 30%;
+	float: left;
+}
+.recrm_detail .item .props .prop .p_val {
+	width: 68%;
+	float: right;
+}
+
+.recrm_detail .item .map {
+	margin-bottom: 10px;
+}
+
+.recrm_list .item .desc {}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+	content: "";
+	display: table;
+	line-height: 0;
+}
+.clearfix:after {
+	clear: both;
+}

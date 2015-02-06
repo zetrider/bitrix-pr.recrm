@@ -1,0 +1,82 @@
+#recrm_map {
+	margin: 10px 0;
+}
+
+.recrm_list {}
+
+.recrm_list .items {
+	padding: 20px 0;
+}
+
+.recrm_list .items .item {
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px #ddd dotted;
+}
+
+.recrm_list .items .item .photo {
+	display: block;
+	float: left;
+	overflow: hidden;
+}
+.recrm_list .items .item .photo img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.recrm_list .items .item .info {
+	width: 100%;
+	float: right;
+}
+
+.recrm_list .items .item .title {
+	font-size: 16px;
+	font-weight: bold;
+}
+.recrm_list .items .item .title a {
+	display: block;
+	padding: 5px 0;
+	text-decoration: underline;
+}
+.recrm_list .items .item .title a:hover {
+	text-decoration: none;
+}
+
+.recrm_list .items .item .desc {}
+
+.recrm_list .items .item .props {
+	padding: 10px 0;
+}
+.recrm_list .items .item .props .prop {
+	padding-bottom: 10px;
+}
+.recrm_list .items .item .props .prop .p_name {
+	width: 30%;
+	float: left;
+}
+.recrm_list .items .item .props .prop .p_val {
+	width: 68%;
+	float: right;
+}
+
+.recrm_list .items .item .more {
+	text-align: right;
+}
+.recrm_list .items .item .more a {
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+	content: "";
+	display: table;
+	line-height: 0;
+}
+.clearfix:after {
+	clear: both;
+}

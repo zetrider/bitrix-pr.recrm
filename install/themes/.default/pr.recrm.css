@@ -1,0 +1,72 @@
+.pr_recrm_menu_icon {
+    background-image: url('icons/pr.recrm/ico_menu.png');
+	background-position: 9px 4px;
+	background-repeat: no-repeat !important;
+}
+.pr_recrm_logo {
+	width: auto;
+	height: 50px;
+	display: block;
+	padding: 10px;
+	position: relative;
+}
+.pr_recrm_logo a {
+	display: block;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+.pr_recrm_logo .recrm {
+	width: 355px;
+	height: 47px;
+	float: left;
+	background-image: url('icons/pr.recrm/logo_recrm.png');
+}
+.pr_recrm_logo .r {
+	width: 315px;
+	float: right;
+}
+@media(max-width:1120px) {
+	.pr_recrm_logo .r {
+		float: left;
+		margin-top: 20px;
+	}
+}
+.pr_recrm_logo .primeweb {
+	width: 135px;
+	height: 49px;
+	float: right;
+    background-image: url('icons/pr.recrm/logo_primeweb.png');
+}
+.pr_recrm_logo .lw {
+	width: 148px;
+	height: 49px;
+	float: right;
+	margin-left: 25px;
+    background-image: url('icons/pr.recrm/logo_lw.png');
+}
+.pr_loader {
+	width: 128px;
+	height: 15px;
+	margin: 10px 0;
+	background-image: url('icons/pr.recrm/loader.gif');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+.pr_cron {
+	width: 170px;
+	height: 160px;
+	float: left;
+	margin: 0 20px 0 0;
+	background-image: url('icons/pr.recrm/ico_cron.png');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+.pr_sortable {
+	list-style: none;
+	padding: 0;
+}
+.pr_sortable li {
+	margin: 10px 0;
+	cursor: pointer;
+}
