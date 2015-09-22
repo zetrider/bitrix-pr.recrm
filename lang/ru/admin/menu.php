@@ -1,4 +1,4 @@
 <?
 $MESS["PR_RECRM_MENU_TEXT"] 	= "ReCRM";
-$MESS["PR_RECRM_MENU_TITLE"] 	= "Èìïîðò äàííûõ èç ReCRM";
+$MESS["PR_RECRM_MENU_TITLE"] 	= "Ð˜Ð¼Ð¿Ð¾Ñ€Ñ‚ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¸Ð· ReCRM";
 ?>

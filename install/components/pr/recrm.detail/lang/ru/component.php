@@ -1,10 +1,10 @@
 <?
-$MESS["PR_RECRM_C_ERR_MODULE"]		= "Íå óñòàíîâëåí ìîäóëü ReCRM.";
-$MESS["PR_RECRM_C_ERR_IBT"]			= "Íå âûáðàí òèï èíôîáëîêà.";
-$MESS["PR_RECRM_C_ERR_IB"]			= "Íå âûáðàí èíôîáëîê ñ îáúåêòàìè.";
-$MESS["PR_RECRM_C_ERR_MOD_IB"]		= "Ìîäóëü Èíôîðìàöèîííûõ áëîêîâ íå óñòàíîâëåí.";
-$MESS["PR_RECRM_C_ERR_404"]			= "Îøèáêà 404.";
-$MESS["PR_RECRM_C_ERR_ACCESS"]		= "Ó Âàñ íåò ïðàâ íà ïðîñìîòð ïîëíîãî òåêñòà.";
+$MESS["PR_RECRM_C_ERR_MODULE"]		= "ÐÐµ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½ Ð¼Ð¾Ð´ÑƒÐ»ÑŒ ReCRM.";
+$MESS["PR_RECRM_C_ERR_IBT"]			= "ÐÐµ Ð²Ñ‹Ð±Ñ€Ð°Ð½ Ñ‚Ð¸Ð¿ Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ°.";
+$MESS["PR_RECRM_C_ERR_IB"]			= "ÐÐµ Ð²Ñ‹Ð±Ñ€Ð°Ð½ Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾Ðº Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð°Ð¼Ð¸.";
+$MESS["PR_RECRM_C_ERR_MOD_IB"]		= "ÐœÐ¾Ð´ÑƒÐ»ÑŒ Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ñ… Ð±Ð»Ð¾ÐºÐ¾Ð² Ð½Ðµ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½.";
+$MESS["PR_RECRM_C_ERR_404"]			= "ÐžÑˆÐ¸Ð±ÐºÐ° 404.";
+$MESS["PR_RECRM_C_ERR_ACCESS"]		= "Ð£ Ð’Ð°Ñ Ð½ÐµÑ‚ Ð¿Ñ€Ð°Ð² Ð½Ð° Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ Ð¿Ð¾Ð»Ð½Ð¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð°.";
 $MESS["PR_RECRM_C_DATE"]			= "d.m.Y";
-$MESS["PR_RECRM_C_DATETIME"]		= "d.m.Y G ÷. i ì. s ñ.";
+$MESS["PR_RECRM_C_DATETIME"]		= "d.m.Y G Ñ‡. i Ð¼. s Ñ.";
 ?>

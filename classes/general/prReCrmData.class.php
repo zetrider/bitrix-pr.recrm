@@ -67,10 +67,22 @@ class prReCrmData
 		);
 	}
 	
+	/* Кадрирование главного фото */
+	public function getCrop()
+	{
+		return intval(COption::GetOptionString(self::$module_id, 'pr_recrm_img_crop'));
+	}
+	
 	/* Водный знак */
 	public function getWRK()
 	{
 		return intval(COption::GetOptionString(self::$module_id, 'pr_recrm_img_wrk'));
+	}
+	
+	/* Выгружать скрытые объекты */
+	public function getSH()
+	{
+		return intval(COption::GetOptionString(self::$module_id, 'pr_recrm_search_hidden'));
 	}
 	
 	/* Что вырезать из описания объекта */
@@ -154,7 +166,12 @@ class prReCrmData
 		}
 		else
 		{
-			return iconv('utf-8', 'windows-1251', $a);
+			if(is_bool($a))
+				return $a;
+			
+			global $APPLICATION;
+			return $APPLICATION->ConvertCharset($a, 'utf-8', LANG_CHARSET);
+			//return iconv('utf-8', 'windows-1251', $a);
 		}
 	}
 	
@@ -209,7 +226,7 @@ class prReCrmData
 		
 		$j_arr 	= json_decode($data, true);
 
-		if(SITE_CHARSET == "UTF-8" OR BX_UTF === true):
+		if(SITE_CHARSET == "UTF-8"):
 			$result = $j_arr;
 		else:
 			$result = array_map(array('prReCrmData', 'convertUtoW') , $j_arr);
@@ -514,7 +531,7 @@ class prReCrmData
 		$json_type 		= $TYPE == 'estate' ? 'estatesearch' : $TYPE;		
 		
 		if($TYPE == 'estate')
-			$json_params 	= array('search_hidden' => '1', 'start' => '0', 'count' => '10000000');
+			$json_params 	= array('search_hidden' => $this->getSH(), 'start' => '0', 'count' => '10000000');
 		
 		/* Из CRM */
 		$json_res 		= $this->getJson($json_type, $json_params);
@@ -584,6 +601,12 @@ class prReCrmData
 		
 		if(count($TYPES) == 0)
 		{
+			/* Callback Finish */
+			$rsHandlers = GetModuleEvents(self::$module_id, "OnAfterImport");
+			while($arHandler = $rsHandlers->Fetch())
+			{
+				ExecuteModuleEvent($arHandler);
+			}
 			//AddMessage2Log('Выгрузка завершена');
 			COption::SetOptionString(self::$module_id, 'pr_recrm_last_upd', time());
 			COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', 0);
@@ -641,7 +664,7 @@ class prReCrmData
 				$PROP 				= array();
 				
 				/* Подробно о элемент из ReCrm */
-				$get_json 			= $this->getJson($TYPE, array('id' => $el_k));
+				$get_json 			= $this->getJson($TYPE, array('id' => $el_k, 'description_format' => '1'));
 				$el_dA 				= $this->convertArrImport($TYPE, $get_json);
 				$el_d				= $el_dA[$el_k];
 				
@@ -676,7 +699,7 @@ class prReCrmData
 				elseif($TYPE == 'estate')
 				{
 					$getCoverSize = $this->getCoverSize();
-					$PROP['estatecoverphoto'] 	= $this->convertArrImport('estatecoverphoto',$this->getJson('estatecoverphoto', array('estate_id' => $el_k, 'width' => $getCoverSize['width'], 'height' => $getCoverSize['height'], 'crop' => '1', 'watermark' => $this->getWRK())));
+					$PROP['estatecoverphoto'] 	= $this->convertArrImport('estatecoverphoto',$this->getJson('estatecoverphoto', array('estate_id' => $el_k, 'width' => $getCoverSize['width'], 'height' => $getCoverSize['height'], 'crop' => $this->getCrop(), 'watermark' => $this->getWRK())));
 					$PROP['estatephoto'] 		= $this->convertArrImport('estatephoto',$this->getJson('estatephoto', array('estate_id' => $el_k, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
 					$PROP['estatephotolayout'] 	= $this->convertArrImport('estatephotolayout',$this->getJson('estatephotolayout', array('estate_id' => $el_k, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
 					if($PROP['edit_date'] == '') 		$PROP['edit_date'] 		= $PROP['creation_date'];
@@ -703,6 +726,27 @@ class prReCrmData
 					"DETAIL_TEXT" 		=> $el_description,
 					"DETAIL_TEXT_TYPE" 	=> 'html',
 				);
+
+				/*
+				Callback
+					has params TYPE - text, NEW - bool, PARAMS - arr, PROP - arr
+					should return the array('PARAMS' => $arEl, 'PROPS' => $PROP);
+				*/
+				$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeImport");
+				while($arHandler = $rsHandlers->Fetch())
+				{
+					$forEvent = array(
+						'TYPE' 		=> $TYPE,
+						'NEW' 		=> in_array($el_k, $arrIDs['NEW']),
+						'PARAMS' 	=> $arEl,
+						'PROP' 		=> $PROP,
+					);
+					$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
+					$arEl = $resEvent['PARAMS'];
+					$PROP = $resEvent['PROP'];
+				}
+
+				/* Element */
 				
 				$el = new CIBlockElement;
 				
@@ -741,6 +785,39 @@ class prReCrmData
 			);
 		}
 
+	}
+
+	/* ReCRM Redirect */
+	public function redirect($arParams = array())
+	{
+		$ID = intval($_GET['recrm']);
+		if(CModule::IncludeModule('iblock') AND $ID > 0)
+		{
+			$URL = false;
+			$res = CIBlockElement::GetList(
+				array(), 
+				array(
+					'IBLOCK_ID' => $this->getIBId('estate'),
+					'PROPERTY_id' => $ID
+				),
+				false,
+				false,
+				array('ID', 'DETAIL_PAGE_URL')
+			);
+			while($ob = $res->GetNextElement())  
+			{
+				$ar 	= $ob->GetFields();
+				$URL 	= $ar['DETAIL_PAGE_URL'];
+			}
+			if($URL != false)
+			{
+				LocalRedirect($URL);
+			}
+			else
+			{
+				LocalRedirect('/');
+			}
+		}
 	}
 	
 }

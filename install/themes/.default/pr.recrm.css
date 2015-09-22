@@ -37,13 +37,6 @@
 	float: right;
     background-image: url('icons/pr.recrm/logo_primeweb.png');
 }
-.pr_recrm_logo .lw {
-	width: 148px;
-	height: 49px;
-	float: right;
-	margin-left: 25px;
-    background-image: url('icons/pr.recrm/logo_lw.png');
-}
 .pr_loader {
 	width: 128px;
 	height: 15px;

@@ -258,33 +258,6 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 	{
 		$arItem 	= $obElement->GetFields();
 		$arProps 	= $obElement->GetProperties(array("SORT"=>"ASC")); //, $arFilterProps);
-		
-		$arResult["PROPERTIES"] = $arProps;
-
-		$arResult["NAV_RESULT"] = new CDBResult;
-		if(($arResult["DETAIL_TEXT_TYPE"] == "html") AND (strstr($arResult["DETAIL_TEXT"], "<BREAK />") !== false)):
-			$arPages = explode("<BREAK />", $arResult["DETAIL_TEXT"]);
-		elseif(($arResult["DETAIL_TEXT_TYPE"] != "html") AND (strstr($arResult["DETAIL_TEXT"], "&lt;BREAK /&gt;") !== false)):
-			$arPages = explode("&lt;BREAK /&gt;", $arResult["DETAIL_TEXT"]);
-		else:
-			$arPages = array();
-		endif;
-
-		$arResult["NAV_RESULT"]->InitFromArray($arPages);
-		$arResult["NAV_RESULT"]->NavStart($arNavParams);
-		if(count($arPages) == 0):
-			$arResult["NAV_RESULT"] = false;
-		else:
-			$arResult["NAV_STRING"] = $arResult["NAV_RESULT"]->GetPageNavStringEx($navComponentObject, $arParams["PAGER_TITLE"], $arParams["PAGER_TEMPLATE"], $arParams["PAGER_SHOW_ALWAYS"]);
-			$arResult["NAV_CACHED_DATA"] = $navComponentObject->GetTemplateCachedData();
-
-			$arResult["NAV_TEXT"] = "";
-			while($ar = $arResult["NAV_RESULT"]->Fetch())
-				$arResult["NAV_TEXT"] .= $ar;
-		endif;
-
-		$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($arResult["IBLOCK_ID"], $arResult["ID"]);
-		$arResult["IPROPERTY_VALUES"] = $ipropValues->getValues();
 
 		/* Photos */
 		$arItem['PHOTOS_URL'] = array();
@@ -303,8 +276,9 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 		if($arParams["DETAIL_MAP"] == "Y"):			
 			if(intval($arProps['longitude']['VALUE']) > 0):
 				$arItem["MAP"][] = array(
-					'ID' => $arItem['ID'],
-					'LOC' => array($arProps['latitude']['VALUE'], $arProps['longitude']['VALUE']),
+					'ID' 	=> $arItem['ID'],
+					'LOC' 	=> array($arProps['latitude']['VALUE'], $arProps['longitude']['VALUE']),
+					'ZOOM' 	=> $arProps['zoom']['VALUE'],
 				);
 			endif;
 		endif;
@@ -353,15 +327,16 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 		
 		
 		/* Remove Prop for Data*/
+		$arPropsRe = $arProps;
 		if(count($ADD_PROPS_COMP) > 0):
 			foreach($ADD_PROPS_COMP AS $PROP_U):
-				unset($arProps[$PROP_U]);
+				unset($arPropsRe[$PROP_U]);
 			endforeach;
 		endif;
 
 		/* Props */
 		$arItem['PROPERTIES_RECRM'] = array();
-		foreach($arProps AS $prop)
+		foreach($arPropsRe AS $prop)
 		{
 			if(in_array($prop['CODE'], $arParams["DETAIL_PROPS"])):
 				
@@ -394,6 +369,33 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 
 		$arResult = $arItem;
 
+		$arResult["PROPERTIES"] = $arProps;
+
+		$arResult["NAV_RESULT"] = new CDBResult;
+		if(($arResult["DETAIL_TEXT_TYPE"] == "html") AND (strstr($arResult["DETAIL_TEXT"], "<BREAK />") !== false)):
+			$arPages = explode("<BREAK />", $arResult["DETAIL_TEXT"]);
+		elseif(($arResult["DETAIL_TEXT_TYPE"] != "html") AND (strstr($arResult["DETAIL_TEXT"], "&lt;BREAK /&gt;") !== false)):
+			$arPages = explode("&lt;BREAK /&gt;", $arResult["DETAIL_TEXT"]);
+		else:
+			$arPages = array();
+		endif;
+
+		$arResult["NAV_RESULT"]->InitFromArray($arPages);
+		$arResult["NAV_RESULT"]->NavStart($arNavParams);
+		if(count($arPages) == 0):
+			$arResult["NAV_RESULT"] = false;
+		else:
+			$arResult["NAV_STRING"] = $arResult["NAV_RESULT"]->GetPageNavStringEx($navComponentObject, $arParams["PAGER_TITLE"], $arParams["PAGER_TEMPLATE"], $arParams["PAGER_SHOW_ALWAYS"]);
+			$arResult["NAV_CACHED_DATA"] = $navComponentObject->GetTemplateCachedData();
+
+			$arResult["NAV_TEXT"] = "";
+			while($ar = $arResult["NAV_RESULT"]->Fetch())
+				$arResult["NAV_TEXT"] .= $ar;
+		endif;
+
+		$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($arResult["IBLOCK_ID"], $arResult["ID"]);
+		$arResult["IPROPERTY_VALUES"] = $ipropValues->getValues();
+
 		$arResult["IBLOCK"] 		= GetIBlock($arResult["IBLOCK_ID"], $arResult["IBLOCK_TYPE"]);
 		$arResult["SECTION"] 		= array("PATH" => array());
 		$arResult["SECTION_URL"] 	= "";
@@ -417,8 +419,8 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 	else
 	{
 		$this->AbortResultCache();
-		ShowError("Ёлемент не найден!");
-		@define(GetMessage("PR_RECRM_C_ERR_404"));
+		ShowError(GetMessage("PR_RECRM_C_ERR_404"));
+		@define("ERROR_404", "Y");
 		if($arParams["SET_STATUS_404"]==="Y")
 			CHTTP::SetStatus("404 Not Found");
 	}

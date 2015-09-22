@@ -13,10 +13,13 @@
 		{
 			ymaps.ready(function()
 			{
-
+				var set_zoom = 15;
+				if(data[0]['ZOOM'] > 0)
+					set_zoom = data[0]['ZOOM'];
+				
 				var ReCrmMap = new ymaps.Map('recrm_map', {
 					center		: data[0]['LOC'],
-					zoom		: 10,
+					zoom		: set_zoom,
 					controls	: ['zoomControl']
 				});
 

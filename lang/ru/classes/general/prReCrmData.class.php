@@ -1,4 +1,4 @@
 <?
-$MESS ['PR_RECRM_STATUS_WHAT'] 	= "Âûãðóæàþòñÿ"; 
-$MESS ['PR_RECRM_STATUS_COUNT'] = "îñòàëîñü ýëåìåíòîâ"; 
+$MESS ['PR_RECRM_STATUS_WHAT'] 	= "Ð’Ñ‹Ð³Ñ€ÑƒÐ¶Ð°ÑŽÑ‚ÑÑ"; 
+$MESS ['PR_RECRM_STATUS_COUNT'] = "Ð¾ÑÑ‚Ð°Ð»Ð¾ÑÑŒ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð²"; 
 ?>

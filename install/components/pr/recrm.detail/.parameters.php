@@ -51,7 +51,7 @@ $PARAMETERS ["IBLOCK_ID"] = array(
 	"NAME"				=> GetMessage("PR_RECRM_C_IBLOCK_ID"),
 	"TYPE"				=> "LIST",
 	"VALUES"			=> $arIBlocks,
-	"DEFAULT"			=> '={$_REQUEST["ID"]}',
+	"DEFAULT"			=> '',
 	"ADDITIONAL_VALUES"	=> "Y",
 	"REFRESH"			=> "Y",
 );
@@ -59,7 +59,7 @@ $PARAMETERS ["ELEMENT_ID"] = array(
 	"PARENT" 	=> "BASE",
 	"NAME" 		=> GetMessage('PR_RECRM_C_ELEMENT_ID'),
 	"TYPE" 		=> "STRING",
-	"DEFAULT" 	=> '={$_REQUEST["ELEMENT_ID"]}',
+	"DEFAULT" 	=> '',
 );
 $PARAMETERS ["ELEMENT_CODE"] = array(
 	"PARENT" 	=> "BASE",

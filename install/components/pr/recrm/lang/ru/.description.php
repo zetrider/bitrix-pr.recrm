@@ -1,6 +1,6 @@
 <?
-$MESS ['PR_NAME'] 				= "ÏðàéìÂåá";
+$MESS ['PR_NAME'] 				= "ÐŸÑ€Ð°Ð¹Ð¼Ð’ÐµÐ±";
 $MESS ['PR_RECRM_PARENT_NAME'] 	= "ReCRM";
-$MESS ['PR_RECRM_NAME'] 		= "Îáúåêòû ReCRM";
-$MESS ['PR_RECRM_DESCRIPTION'] 	= "Ðàçäåë îáúåêòîâ";
+$MESS ['PR_RECRM_NAME'] 		= "ÐžÐ±ÑŠÐµÐºÑ‚Ñ‹ ReCRM";
+$MESS ['PR_RECRM_DESCRIPTION'] 	= "Ð Ð°Ð·Ð´ÐµÐ» Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð²";
 ?>

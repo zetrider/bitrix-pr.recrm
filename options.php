@@ -37,15 +37,19 @@ $wTime 			= 3000;
 $error 			= array();
 
 $arWRK 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
+$arSH 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
+$arCROP 		= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
 
-$arAllOptions [] = array("pr_recrm_key",		GetMessage("PR_RECRM_F_KEY"),			array("text"), 					GetMessage("PR_RECRM_F_KEY_NOTE"));
-$arAllOptions [] = array("pr_recrm_s_step",		GetMessage("PR_RECRM_F_S_STEP"),		array("text"), 					GetMessage("PR_RECRM_F_S_STEP_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_w",		GetMessage("PR_RECRM_F_IMG_W"),			array("text"), 					GetMessage("PR_RECRM_F_IMG_W_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_h",		GetMessage("PR_RECRM_F_IMG_H"),			array("text"), 					GetMessage("PR_RECRM_F_IMG_H_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_wrk",	GetMessage("PR_RECRM_F_IMG_WRK"),		array("selectbox",$arWRK), 		GetMessage("PR_RECRM_F_IMG_WRK_NOTE"));
-$arAllOptions [] = array("pr_recrm_types",		GetMessage("PR_RECRM_F_TYPES_SELECT"),	array("multiple", $TYPES), 		GetMessage("PR_RECRM_F_TYPES_SELECT_NOTE"));
-$arAllOptions [] = array("pr_recrm_d_rep",		GetMessage("PR_RECRM_F_DESC_REP"),		array("textarea", "5", "40"), 	GetMessage("PR_RECRM_F_DESC_REP_NOTE"));
-$arAllOptions [] = array("pr_recrm_last_upd",	GetMessage("PR_RECRM_F_LAST_UPD"),		array("text"), 					GetMessage("PR_RECRM_F_LAST_UPD_NOTE"));
+$arAllOptions [] = array("pr_recrm_key",			GetMessage("PR_RECRM_F_KEY"),			array("text"), 					GetMessage("PR_RECRM_F_KEY_NOTE"));
+$arAllOptions [] = array("pr_recrm_s_step",			GetMessage("PR_RECRM_F_S_STEP"),		array("text"), 					GetMessage("PR_RECRM_F_S_STEP_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_w",			GetMessage("PR_RECRM_F_IMG_W"),			array("text"), 					GetMessage("PR_RECRM_F_IMG_W_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_h",			GetMessage("PR_RECRM_F_IMG_H"),			array("text"), 					GetMessage("PR_RECRM_F_IMG_H_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_crop",		GetMessage("PR_RECRM_F_IMG_CROP"),		array("selectbox",$arCROP), 	GetMessage("PR_RECRM_F_IMG_CROP_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_wrk",		GetMessage("PR_RECRM_F_IMG_WRK"),		array("selectbox",$arWRK), 		GetMessage("PR_RECRM_F_IMG_WRK_NOTE"));
+$arAllOptions [] = array("pr_recrm_search_hidden",	GetMessage("PR_RECRM_SEARCH_HIDDEN"),	array("selectbox",$arSH), 		GetMessage("PR_RECRM_SEARCH_HIDDEN_NOTE"));
+$arAllOptions [] = array("pr_recrm_types",			GetMessage("PR_RECRM_F_TYPES_SELECT"),	array("multiple", $TYPES), 		GetMessage("PR_RECRM_F_TYPES_SELECT_NOTE"));
+$arAllOptions [] = array("pr_recrm_d_rep",			GetMessage("PR_RECRM_F_DESC_REP"),		array("textarea", "5", "40"), 	GetMessage("PR_RECRM_F_DESC_REP_NOTE"));
+$arAllOptions [] = array("pr_recrm_last_upd",		GetMessage("PR_RECRM_F_LAST_UPD"),		array("text"), 					GetMessage("PR_RECRM_F_LAST_UPD_NOTE"));
 foreach($TYPES AS $TYPE_k => $TYPE_v)
 {
 	$arAllOptions[] = array(
@@ -243,8 +247,7 @@ $tabControl->BeginNextTab();
 <div class="pr_recrm_logo">
 	<a href="http://recrm.ru/" class="recrm" target="_blank"></a>
 	<div class="r">
-		<a href="http://leader-web.ru/?utm_source=modul-recrm-integration&utm_medium=partner&utm_campaign=ReCRM-Bitrix-Integration" class="lw" target="_blank"></a>
-		<a href="http://01pr.ru/recrm/?utm_source=bitrix.admin.site&utm_medium=modules&utm_campaign=pr.recrm" class="primeweb" target="_blank"></a>
+		<a href="http://01pr.ru/solutions/recrm-import/?utm_source=bitrix.admin.site&utm_medium=modules&utm_campaign=pr.recrm" class="primeweb" target="_blank"></a>
 	</div>
 </div>
 	';

@@ -11,6 +11,8 @@
 IncludeModuleLangFile(__FILE__);
 class prReCrmProps
 {
+
+	static $module_id = "pr.recrm";
 	
 	public static function getTypes($type = '', $name = '')
 	{
@@ -66,6 +68,22 @@ class prReCrmProps
 				//'request' 			=> GetMessage("PR_RECRM_NAME_REQUEST"),
 			)
 		);
+
+		/*
+		Callback
+			has params TYPE - text, NAME - text, ARR - arr
+			should return the array('url' => array(), 'arr' => array(), 'name' => array());
+		*/
+		$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeTypes");
+		while($arHandler = $rsHandlers->Fetch())
+		{
+			$forEvent = array(
+				'TYPE' 		=> $type,
+				'NAME' 		=> $name,
+				'ARR' 		=> $arr,
+			);
+			$arr = ExecuteModuleEvent($arHandler, $forEvent);
+		}
 		
 		if($name == '') return $arr[$type];
 		

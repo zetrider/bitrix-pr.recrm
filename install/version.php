@@ -9,7 +9,7 @@
 ?>
 <?
 $arModuleVersion = array(
-    "VERSION" => "1.0.0",
-    "VERSION_DATE" => "2015-01-08 16:32:10"
+    "VERSION" => "1.1.5",
+    "VERSION_DATE" => "2015-08-05 10:00:00"
 );
 ?>
