@@ -542,7 +542,7 @@ class prReCrmData
 		$UPD_TIME = $this->getLastUpdate();
 		if($UPD_TIME > 0 AND $TYPE == 'estate')
 		{
-			$json_params ['date_from'] 	= date('j.m.Y i:s', $UPD_TIME);
+			$json_params ['date_from'] 	= date('j.m.Y h:i', $UPD_TIME);
 			$json_res_upd 				= $this->getJson($json_type, $json_params);
 			$ReCrmIDsUpd 				= $this->convertArrCheck($json_type, $json_res_upd);
 		}
