@@ -14,39 +14,39 @@ class prReCrmData
 	
     static $module_id = "pr.recrm";
 	
-	/* Êëþ÷ */
+	/* ÐšÐ»ÑŽÑ‡ */
 	public function getKey()
 	{
 		return COption::GetOptionString(self::$module_id, 'pr_recrm_key');
 	}
 	
-	/* ×òî âûáðàíî äëÿ âûãðóçêè */
+	/* Ð§Ñ‚Ð¾ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð¾ Ð´Ð»Ñ Ð²Ñ‹Ð³Ñ€ÑƒÐ·ÐºÐ¸ */
 	public function getSelectTypes()
 	{
 		$types = COption::GetOptionString(self::$module_id, 'pr_recrm_types');
 		return $types == '' ? array() : unserialize($types);
 	}
 	
-	/* Äàòà îáíîâëåíèÿ */
+	/* Ð”Ð°Ñ‚Ð° Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ */
 	public function getLastUpdate()
 	{
 		return COption::GetOptionString(self::$module_id, 'pr_recrm_last_upd');
 	}
 	
-	/* Ñòàðò îáíîâëåíèÿ */
+	/* Ð¡Ñ‚Ð°Ñ€Ñ‚ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ */
 	public function getStartUpdate()
 	{
 		return COption::GetOptionString(self::$module_id, 'pr_recrm_start_upd');
 	}
 	
-	/* Øàã */
+	/* Ð¨Ð°Ð³ */
 	public function getStep()
 	{
 		$gStep = COption::GetOptionString(self::$module_id, 'pr_recrm_step');
 		return $gStep + 1;
 	}
 	
-	/* Âðåìÿ øàãà */
+	/* Ð’Ñ€ÐµÐ¼Ñ ÑˆÐ°Ð³Ð° */
 	public function getStepTime()
 	{
 		$gTime = COption::GetOptionString(self::$module_id, 'pr_recrm_s_step');
@@ -56,7 +56,7 @@ class prReCrmData
 		return intval($gTime);
 	}
 	
-	/* Ðàçìåðû äëÿ ïðåâüþ */
+	/* Ð Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð´Ð»Ñ Ð¿Ñ€ÐµÐ²ÑŒÑŽ */
 	public function getCoverSize()
 	{
 		$width 	= intval(COption::GetOptionString(self::$module_id, 'pr_recrm_img_w'));
@@ -67,44 +67,52 @@ class prReCrmData
 		);
 	}
 	
-	/* Êàäðèðîâàíèå ãëàâíîãî ôîòî */
+	/* ÐšÐ°Ð´Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð³Ð»Ð°Ð²Ð½Ð¾Ð³Ð¾ Ñ„Ð¾Ñ‚Ð¾ */
 	public function getCrop()
 	{
 		return intval(COption::GetOptionString(self::$module_id, 'pr_recrm_img_crop'));
 	}
 	
-	/* Âîäíûé çíàê */
+	/* Ð’Ð¾Ð´Ð½Ñ‹Ð¹ Ð·Ð½Ð°Ðº */
 	public function getWRK()
 	{
 		return intval(COption::GetOptionString(self::$module_id, 'pr_recrm_img_wrk'));
 	}
 	
-	/* Âûãðóæàòü ñêðûòûå îáúåêòû */
+	/* Ð’Ñ‹Ð³Ñ€ÑƒÐ¶Ð°Ñ‚ÑŒ ÑÐºÑ€Ñ‹Ñ‚Ñ‹Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ */
 	public function getSH()
 	{
 		return intval(COption::GetOptionString(self::$module_id, 'pr_recrm_search_hidden'));
 	}
 	
-	/* ×òî âûðåçàòü èç îïèñàíèÿ îáúåêòà */
+	/* Ð’Ñ‹Ð³Ñ€ÑƒÐ¶Ð°Ñ‚ÑŒ ÑÐºÑ€Ñ‹Ñ‚Ñ‹Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ */
+	public function getTZ()
+	{
+		$return = COption::GetOptionString(self::$module_id, 'pr_recrm_timezone');
+		if(strlen($return) == 0) $return = 'Europe/Moscow';
+		return $return;
+	}
+	
+	/* Ð§Ñ‚Ð¾ Ð²Ñ‹Ñ€ÐµÐ·Ð°Ñ‚ÑŒ Ð¸Ð· Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° */
 	public function getDescStr()
 	{
 		return COption::GetOptionString(self::$module_id, 'pr_recrm_d_rep');
 	}
 	
-	/* ID ÈÁ ïî êëþ÷àì */
+	/* ID Ð˜Ð‘ Ð¿Ð¾ ÐºÐ»ÑŽÑ‡Ð°Ð¼ */
 	public function getIBId($key = '')
 	{
 		return intval( COption::GetOptionString(self::$module_id, 'pr_recrm_ib_'.$key) );
 	}
 	
-	/* Êðîí */
+	/* ÐšÑ€Ð¾Ð½ */
 	public function cron()
 	{
-		//AddMessage2Log('Çàïóñê êðîíà');
+		//AddMessage2Log('Ð—Ð°Ð¿ÑƒÑÐº ÐºÑ€Ð¾Ð½Ð°');
 		$this->importIBEl('Y', 0, 'Y');
 	}
 	
-	/* Ñïèñîê âñåõ ÈÁ */
+	/* Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð²ÑÐµÑ… Ð˜Ð‘ */
 	public function getIB($first = false) {
 		$return 	= array();
 		if(CModule::IncludeModule("iblock"))
@@ -119,7 +127,7 @@ class prReCrmData
 		return $return;
 	}
 	
-	/* Ñïèñîê ñàéòîâ */
+	/* Ð¡Ð¿Ð¸ÑÐ¾Ðº ÑÐ°Ð¹Ñ‚Ð¾Ð² */
 	public function getSiteIDs()
 	{
 		if(CModule::IncludeModule("iblock"))
@@ -134,7 +142,7 @@ class prReCrmData
 		}
 	}
 	
-	/* Ìàññèâ ìàññèâó */
+	/* ÐœÐ°ÑÑÐ¸Ð² Ð¼Ð°ÑÑÐ¸Ð²Ñƒ */
 	public function is_a($a = '', $check = false)   
 	{
 		$arr = is_array($a) ? $a : array();
@@ -144,7 +152,7 @@ class prReCrmData
 		return $arr;
 	}
 	
-	/* Âñå ñâîéñòâà èíôîáëîêà */
+	/* Ð’ÑÐµ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ° */
 	public function getIBAllProps($type = '')
 	{
 		$ARR 	= array();
@@ -157,7 +165,7 @@ class prReCrmData
 		return $ARR;
 	}
 	
-	/* Êîíâåðòèðóåì ôîìàð, TODO: ïðîâåðèòü íà utf */
+	/* ÐšÐ¾Ð½Ð²ÐµÑ€Ñ‚Ð¸Ñ€ÑƒÐµÐ¼ Ñ„Ð¾Ð¼Ð°Ñ€, TODO: Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½Ð° utf */
 	public function convertUtoW($a = '')   
 	{
 		if(is_array($a))
@@ -175,7 +183,7 @@ class prReCrmData
 		}
 	}
 	
-	/* Çàïðîñ ê API */
+	/* Ð—Ð°Ð¿Ñ€Ð¾Ñ Ðº API */
 	public function getJson($type = '', $params = array())
 	{
 		$key 	= $this->getKey();
@@ -235,7 +243,7 @@ class prReCrmData
 		return $result;
 	}
 	
-	/* Ïðîâåðêà API Key */
+	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° API Key */
 	public function checkKey()
 	{
 		$q = $this->getJson('key');
@@ -245,7 +253,7 @@ class prReCrmData
 		return true;
 	}
 	
-	/* Ïðîâåðêà âûáðàííûõ ÈÁ */
+	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… Ð˜Ð‘ */
 	public function checkIB()
 	{
 		$ERR = array();
@@ -259,7 +267,7 @@ class prReCrmData
 		return $ERR;
 	}
 	
-	/* Óäàëÿåì èç ìàññèâà ìàññèâ */
+	/* Ð£Ð´Ð°Ð»ÑÐµÐ¼ Ð¸Ð· Ð¼Ð°ÑÑÐ¸Ð²Ð° Ð¼Ð°ÑÑÐ¸Ð² */
 	public function unsetArrEl($arr = array(), $del = array()) {
 		foreach($del AS $k => $v)
 		{
@@ -271,27 +279,27 @@ class prReCrmData
 		return $arr;
 	}
 	
-	/* Ýëåìåíòû ÈÁ */
+	/* Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹ Ð˜Ð‘ */
 	public function getEliB($type = '') {
 		if(CModule::IncludeModule("iblock"))
 		{
 			$iblock = $this->getIBId($type);
-			$ar 		= array('id_recrm' => array(), 'id_btrx' => array());			
+			$arr 		= array('id_recrm' => array(), 'id_btrx' => array());			
 			$arFilter 	= array("IBLOCK_ID" => $iblock);
 			$arSelect 	= array("ID", "PROPERTY_id");
 			$res 		= CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 			while($ob = $res->GetNextElement())
 			{
-				$f 							= $ob->GetFields();
-				$id_crm 					= $f['PROPERTY_ID_VALUE'];
-				$ar['id_recrm'][$id_crm] 	= $id_crm;
-				$ar['id_btrx'][$id_crm] 	= $f['ID'];
+				$arF 						= $ob->GetFields();
+				$id_crm 					= $arF['PROPERTY_ID_VALUE'];
+				$arr['id_recrm'][$id_crm] 	= $id_crm;
+				$arr['id_btrx'][$id_crm] 	= $arF['ID'];
 			}
-			return $ar;
+			return $arr;
 		}
 	}
 	
-	/* Ôîðìèðóåì ìàññèâ IDs èç json: ID = ID èç ReCrm */
+	/* Ð¤Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ð¼Ð°ÑÑÐ¸Ð² IDs Ð¸Ð· json: ID = ID Ð¸Ð· ReCrm */
 	public function convertArrCheck($TYPE = '', $json = array()) {
 		$new 	= array();
 		$arr 	= prReCrmProps::getTypes('arr');
@@ -305,7 +313,7 @@ class prReCrmData
 		return $new;
 	}
 	
-	/* Ïðîâåðêà ñâîéñò ÈÁ */
+	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑÐ²Ð¾Ð¹ÑÑ‚ Ð˜Ð‘ */
 	public function checkIBProps($TYPE = '', $PROPS = array())
 	{
 		$NEW_PROP = array();
@@ -395,19 +403,19 @@ class prReCrmData
 		}
 	}
 	
-	/* Êîä ñâîéñòâà */
+	/* ÐšÐ¾Ð´ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° */
 	public function convertKeyProp($key = '') {
 		$key = strtolower($key);
 		$key = preg_replace("/[^a-z0-9_]/", "", $key);
 		return $key;
 	}
 	
-	/* Èìÿ ñâîéñòâà */
+	/* Ð˜Ð¼Ñ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° */
 	public function convertNameProp($key = '') {
 		return prReCrmProps::getPropsNames($key);
 	}
 	
-	/* Ïåðåôîðìèðóåì ìàññèâ äëÿ èìïîðòà */
+	/* ÐŸÐµÑ€ÐµÑ„Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ð¼Ð°ÑÑÐ¸Ð² Ð´Ð»Ñ Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð° */
 	public function convertArrImport($type = '', $a = array()) {
 		$n 	= array();
 		$p 	= array();
@@ -483,7 +491,7 @@ class prReCrmData
 		return $n;
 	}
 	
-	/* Ïðàâèì äàííûå */
+	/* ÐŸÑ€Ð°Ð²Ð¸Ð¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ */
 	public function dataChange($key = '', $val = '')
 	{
 		if(in_array($key, array('creation_date', 'creation_datetime', 'edit_date', 'edit_datetime')))
@@ -515,7 +523,7 @@ class prReCrmData
 		fclose ($f);
 	}
 	
-	/* Âûáèðàì äàííûå äëÿ èìïîðòà */
+	/* Ð’Ñ‹Ð±Ð¸Ñ€Ð°Ð¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð´Ð»Ñ Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð° */
 	public function arrIDs($TYPE = '', $STEP = 0)
 	{
 		if($STEP > 1)
@@ -533,30 +541,31 @@ class prReCrmData
 		if($TYPE == 'estate')
 			$json_params 	= array('search_hidden' => $this->getSH(), 'start' => '0', 'count' => '10000000');
 		
-		/* Èç CRM */
+		/* Ð˜Ð· CRM */
 		$json_res 		= $this->getJson($json_type, $json_params);
 		$ReCrmIDs 		= $this->convertArrCheck($json_type, $json_res);
 		$ReCrmIDsUpd 	= $ReCrmIDs;
 		
-		/* Äëÿ èçìåíåííûõ îáúåêòîâ */
+		/* Ð”Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð½Ñ‹Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² */
 		$UPD_TIME = $this->getLastUpdate();
 		if($UPD_TIME > 0 AND $TYPE == 'estate')
 		{
-			$json_params ['date_from'] 	= date('j.m.Y h:i', $UPD_TIME);
+			date_default_timezone_set($this->getTZ());
+			$json_params ['date_from'] 	= date('j.m.Y H:i', $UPD_TIME);
 			$json_res_upd 				= $this->getJson($json_type, $json_params);
 			$ReCrmIDsUpd 				= $this->convertArrCheck($json_type, $json_res_upd);
 		}
 		
-		/* Îáúåêòû èç ÁÄ */
+		/* ÐžÐ±ÑŠÐµÐºÑ‚Ñ‹ Ð¸Ð· Ð‘Ð” */
 		$DBArr 	= $this->getEliB($TYPE);
 		
-		/* Èùåì ýëåìåíòû, êîòîðûå íóæíî óäàëèòü, êîòîðûõ íåò â CRM íî åñòü â ÁÄ */
+		/* Ð˜Ñ‰ÐµÐ¼ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð½ÑƒÐ¶Ð½Ð¾ ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð½ÐµÑ‚ Ð² CRM Ð½Ð¾ ÐµÑÑ‚ÑŒ Ð² Ð‘Ð” */
 		$DEL 	= array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
 		
-		/* Èùåì ýëåìåíòû, êîòîðûå íóæíî äîáàâèòü, êîòîðûõ íåò â ÁÄ íî åñòü â CRM */
+		/* Ð˜Ñ‰ÐµÐ¼ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð½ÑƒÐ¶Ð½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð½ÐµÑ‚ Ð² Ð‘Ð” Ð½Ð¾ ÐµÑÑ‚ÑŒ Ð² CRM */
 		$NEW 	= array_diff_assoc($ReCrmIDs, $DBArr['id_recrm']);
 		
-		/* Ýëåìåíòû, êîòîðûå íóæíî îáíîâèòü, óáèðàåì {óäàëèòü + íîâûå} èç ìàññèâà ID Recrm */
+		/* Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð½ÑƒÐ¶Ð½Ð¾ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ, ÑƒÐ±Ð¸Ñ€Ð°ÐµÐ¼ {ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ + Ð½Ð¾Ð²Ñ‹Ðµ} Ð¸Ð· Ð¼Ð°ÑÑÐ¸Ð²Ð° ID Recrm */
 		$UPD_U 	= $DEL + $NEW;
 		$UPD 	= $this->unsetArrEl($ReCrmIDsUpd, $UPD_U);
 		
@@ -567,11 +576,14 @@ class prReCrmData
 		if($STEP == '1')
 		{
 			$this->tmpDb($return);
+
+			/* Ð§Ñ‚Ð¾Ð±Ñ‹ Ð½Ðµ Ð¿Ñ€Ð¾Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð½Ñ‹Ðµ Ð²Ð¾ Ð²Ñ€ÐµÐ¼Ñ Ð²Ñ‹Ð³Ñ€ÑƒÐ·ÐºÐ¸ */
+			COption::SetOptionString(self::$module_id, 'pr_recrm_last_upd', time());
 		}
 		return $return;
 	}
 	
-	/* Èìïîðò */
+	/* Ð˜Ð¼Ð¿Ð¾Ñ€Ñ‚ */
 	public function importIBEl($CRON = 0, $TYPES_ARR = array(), $START = 'N')
 	{
 		if($START == 'Y'):
@@ -597,7 +609,7 @@ class prReCrmData
 		$TYPES_G 	= array_filter($TYPES_G);
 		$TYPES 		= $TYPES_G;
 		
-		//AddMessage2Log('Ïîëó÷åíû òèïû '.implode(', ',$TYPES_G));
+		//AddMessage2Log('ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ñ‹ Ñ‚Ð¸Ð¿Ñ‹ '.implode(', ',$TYPES_G));
 		
 		if(count($TYPES) == 0)
 		{
@@ -607,8 +619,7 @@ class prReCrmData
 			{
 				ExecuteModuleEvent($arHandler);
 			}
-			//AddMessage2Log('Âûãðóçêà çàâåðøåíà');
-			COption::SetOptionString(self::$module_id, 'pr_recrm_last_upd', time());
+			//AddMessage2Log('Ð’Ñ‹Ð³Ñ€ÑƒÐ·ÐºÐ° Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð°');
 			COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', 0);
 			COption::SetOptionString(self::$module_id, 'pr_recrm_step', '0');
 			return true;
@@ -620,10 +631,10 @@ class prReCrmData
 			$el_import 	= $arrIDs['DEL'] + $arrIDs['NEW'] + $arrIDs['UPD'];
 			$el_count 	= count($el_import);
 			
-			//AddMessage2Log('Íà÷àë âûãðóæàòü '.$TYPE . ' êîëè÷åñòâî ' . count($el_import));
+			//AddMessage2Log('ÐÐ°Ñ‡Ð°Ð» Ð²Ñ‹Ð³Ñ€ÑƒÐ¶Ð°Ñ‚ÑŒ '.$TYPE . ' ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ' . count($el_import));
 			if($el_count == 0)
 			{
-				//AddMessage2Log('Â òèïå '.$TYPE . ' áîëüøå íåò îáúåêòîâ, âûçûâàåì ìåòîä âûãðóçêè');
+				//AddMessage2Log('Ð’ Ñ‚Ð¸Ð¿Ðµ '.$TYPE . ' Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½ÐµÑ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð², Ð²Ñ‹Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð¼ÐµÑ‚Ð¾Ð´ Ð²Ñ‹Ð³Ñ€ÑƒÐ·ÐºÐ¸');
 				COption::SetOptionString(self::$module_id, 'pr_recrm_step', '0');
 				if($CRON === 'Y')
 				{
@@ -640,16 +651,16 @@ class prReCrmData
 				$el_db 			= $this->getEliB($TYPE);
 			}
 			
-			$StepTime = $this->getStepTime(); // Ñêîëüêî øàã
+			$StepTime = $this->getStepTime(); // Ð¡ÐºÐ¾Ð»ÑŒÐºÐ¾ ÑˆÐ°Ð³
 			foreach($el_import AS $el_k)
 			{
 				if(intval($el_k) == 0) continue;
 				
-				/* Âûõîä èç öèêëà ïî âðåìåíè */
+				/* Ð’Ñ‹Ñ…Ð¾Ð´ Ð¸Ð· Ñ†Ð¸ÐºÐ»Ð° Ð¿Ð¾ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ */
 				$LeftTime = time() - $this->getStartUpdate();
 				if($CRON !== 'Y' AND $StepTime > 0 AND $LeftTime >= $StepTime) break;
 				
-				/* ID â Btrx */
+				/* ID Ð² Btrx */
 				$elDbId = $el_db['id_btrx'][$el_k];
 				
 				if(in_array($el_k, $arrIDs['DEL'])):
@@ -663,12 +674,12 @@ class prReCrmData
 				$el_description 	= '';
 				$PROP 				= array();
 				
-				/* Ïîäðîáíî î ýëåìåíò èç ReCrm */
+				/* ÐŸÐ¾Ð´Ñ€Ð¾Ð±Ð½Ð¾ Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ð¸Ð· ReCrm */
 				$get_json 			= $this->getJson($TYPE, array('id' => $el_k, 'description_format' => '1'));
 				$el_dA 				= $this->convertArrImport($TYPE, $get_json);
 				$el_d				= $el_dA[$el_k];
 				
-				/* Çàãîëîâêè */
+				/* Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¸ */
 				if(is_array($el_d['title']))
 				{
 					$el_title = $el_d['title']['value'];
@@ -680,7 +691,7 @@ class prReCrmData
 					unset($el_d['name']);
 				}
 				
-				/* Îïèñàíèå */
+				/* ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ */
 				if(is_array($el_d['description'])):
 					$el_description = nl2br(str_replace($this->getDescStr(), '', $el_d['description']['value']));
 					unset($el_d['description']);
@@ -691,7 +702,7 @@ class prReCrmData
 					$PROP[$el_prop_k] = $this->dataChange($el_prop_k, $el_prop_v['value']);
 				}
 				
-				/* Èçîáðàæåíèÿ */
+				/* Ð˜Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ */
 				if($TYPE == 'agent')
 				{
 					$PROP['photo'] = $this->convertArrImport('agentphoto',$this->getJson('agentphoto', array('agent_id' => $el_k, 'width' => '500', 'height' => '500', 'crop' => '0')));
@@ -706,7 +717,7 @@ class prReCrmData
 					if($PROP['edit_datetime'] == '') 	$PROP['edit_datetime'] 	= $PROP['creation_datetime'];
 				}
 				
-				/* Äîáàâëÿåì ñâîéñòâà êîòîðûõ íåò */
+				/* Ð”Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð½ÐµÑ‚ */
 				$this->checkIBProps($TYPE, $el_d);
 				
 				$el_code = CUtil::translit($el_title.'_'.$el_k, "ru" , array(
@@ -750,7 +761,7 @@ class prReCrmData
 				
 				$el = new CIBlockElement;
 				
-				if(in_array($el_k, $arrIDs['UPD']))
+				if(in_array($el_k, $arrIDs['UPD']) OR $elDbId > 0)
 				{
 					$cur_id = $el->Update($elDbId, $arEl);
 					foreach($PROP AS $PROP_k => $PROP_v)
@@ -758,9 +769,9 @@ class prReCrmData
 						CIBlockElement::SetPropertyValues($elDbId, $IBLOCK_ID, $PROP_v, $PROP_k);
 					}
 					unset($arrIDs['UPD'][$el_k]);
+					unset($arrIDs['NEW'][$el_k]); /* ÐÐ° ÑÐ»ÑƒÑ‡Ð°Ð¹ */
 				}
-				
-				if(in_array($el_k, $arrIDs['NEW']))
+				elseif(in_array($el_k, $arrIDs['NEW']))
 				{
 					$arEl["PROPERTY_VALUES"] = $PROP;
 					$cur_id = $el->Add($arEl);
@@ -769,15 +780,15 @@ class prReCrmData
 				
 				$el_count--;
 				
-				//if($el->LAST_ERROR) AddMessage2Log('Îøèáêà íà òèïå ' . $TYPE . ': ' . $el->LAST_ERROR);
+				//if($el->LAST_ERROR) AddMessage2Log('ÐžÑˆÐ¸Ð±ÐºÐ° Ð½Ð° Ñ‚Ð¸Ð¿Ðµ ' . $TYPE . ': ' . $el->LAST_ERROR);
 			}
 			
-			//AddMessage2Log('Ïðîøëî ñåê '. $LeftTime . ' ïðè âðåìåíè øàãà '.$StepTime);
-			//AddMessage2Log('Ñáðîñ öèêëà íà òèïå '. $TYPE .' ïðè êîëè÷åñòâå ýëåìåíòîâ '.$el_count);
+			//AddMessage2Log('ÐŸÑ€Ð¾ÑˆÐ»Ð¾ ÑÐµÐº '. $LeftTime . ' Ð¿Ñ€Ð¸ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ ÑˆÐ°Ð³Ð° '.$StepTime);
+			//AddMessage2Log('Ð¡Ð±Ñ€Ð¾Ñ Ñ†Ð¸ÐºÐ»Ð° Ð½Ð° Ñ‚Ð¸Ð¿Ðµ '. $TYPE .' Ð¿Ñ€Ð¸ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ðµ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² '.$el_count);
 			
 			COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', time());
 			$this->tmpDb($arrIDs);
-			if($CRON === 'Y') $this->importIBEl('Y', $TYPES); // åñëè êðîí - ðåêóðñèÿ
+			if($CRON === 'Y') $this->importIBEl('Y', $TYPES); // ÐµÑÐ»Ð¸ ÐºÑ€Ð¾Ð½ - Ñ€ÐµÐºÑƒÑ€ÑÐ¸Ñ
 			return array(
 				'MESS' 	=> GetMessage("PR_RECRM_STATUS_WHAT") . ': "'.prReCrmProps::getTypes('name', $TYPE).'", '.GetMessage("PR_RECRM_STATUS_COUNT").': '.$el_count.'.',
 				'STEP' 	=> $STEP,
@@ -797,8 +808,8 @@ class prReCrmData
 			$res = CIBlockElement::GetList(
 				array(), 
 				array(
-					'IBLOCK_ID' => $this->getIBId('estate'),
-					'PROPERTY_id' => $ID
+					'IBLOCK_ID' 	=> $this->getIBId('estate'),
+					'PROPERTY_id' 	=> $ID
 				),
 				false,
 				false,

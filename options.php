@@ -35,21 +35,23 @@ $STATUS 		= false;
 $wLocation 		= '';
 $wTime 			= 3000;
 $error 			= array();
-
 $arWRK 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
 $arSH 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
 $arCROP 		= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
+$arTimeZone 	= prReCrmProps::getTimeZone();
 
-$arAllOptions [] = array("pr_recrm_key",			GetMessage("PR_RECRM_F_KEY"),			array("text"), 					GetMessage("PR_RECRM_F_KEY_NOTE"));
-$arAllOptions [] = array("pr_recrm_s_step",			GetMessage("PR_RECRM_F_S_STEP"),		array("text"), 					GetMessage("PR_RECRM_F_S_STEP_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_w",			GetMessage("PR_RECRM_F_IMG_W"),			array("text"), 					GetMessage("PR_RECRM_F_IMG_W_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_h",			GetMessage("PR_RECRM_F_IMG_H"),			array("text"), 					GetMessage("PR_RECRM_F_IMG_H_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_crop",		GetMessage("PR_RECRM_F_IMG_CROP"),		array("selectbox",$arCROP), 	GetMessage("PR_RECRM_F_IMG_CROP_NOTE"));
-$arAllOptions [] = array("pr_recrm_img_wrk",		GetMessage("PR_RECRM_F_IMG_WRK"),		array("selectbox",$arWRK), 		GetMessage("PR_RECRM_F_IMG_WRK_NOTE"));
-$arAllOptions [] = array("pr_recrm_search_hidden",	GetMessage("PR_RECRM_SEARCH_HIDDEN"),	array("selectbox",$arSH), 		GetMessage("PR_RECRM_SEARCH_HIDDEN_NOTE"));
-$arAllOptions [] = array("pr_recrm_types",			GetMessage("PR_RECRM_F_TYPES_SELECT"),	array("multiple", $TYPES), 		GetMessage("PR_RECRM_F_TYPES_SELECT_NOTE"));
-$arAllOptions [] = array("pr_recrm_d_rep",			GetMessage("PR_RECRM_F_DESC_REP"),		array("textarea", "5", "40"), 	GetMessage("PR_RECRM_F_DESC_REP_NOTE"));
-$arAllOptions [] = array("pr_recrm_last_upd",		GetMessage("PR_RECRM_F_LAST_UPD"),		array("text"), 					GetMessage("PR_RECRM_F_LAST_UPD_NOTE"));
+$arAllOptions [] = array("pr_recrm_key",			GetMessage("PR_RECRM_F_KEY"),			array("text"), 							GetMessage("PR_RECRM_F_KEY_NOTE"));
+$arAllOptions [] = array("pr_recrm_s_step",			GetMessage("PR_RECRM_F_S_STEP"),		array("text"), 							GetMessage("PR_RECRM_F_S_STEP_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_w",			GetMessage("PR_RECRM_F_IMG_W"),			array("text"), 							GetMessage("PR_RECRM_F_IMG_W_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_h",			GetMessage("PR_RECRM_F_IMG_H"),			array("text"), 							GetMessage("PR_RECRM_F_IMG_H_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_crop",		GetMessage("PR_RECRM_F_IMG_CROP"),		array("selectbox",$arCROP), 			GetMessage("PR_RECRM_F_IMG_CROP_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_wrk",		GetMessage("PR_RECRM_F_IMG_WRK"),		array("selectbox",$arWRK), 				GetMessage("PR_RECRM_F_IMG_WRK_NOTE"));
+$arAllOptions [] = array("pr_recrm_search_hidden",	GetMessage("PR_RECRM_SEARCH_HIDDEN"),	array("selectbox",$arSH), 				GetMessage("PR_RECRM_SEARCH_HIDDEN_NOTE"));
+$arAllOptions [] = array("pr_recrm_timezone",		GetMessage("PR_RECRM_TIMEZONE"),		array("selectboxgroup", $arTimeZone),	GetMessage("PR_RECRM_TIMEZONE_NOTE"));
+$arAllOptions [] = array("pr_recrm_types",			GetMessage("PR_RECRM_F_TYPES_SELECT"),	array("multiple", $TYPES), 				GetMessage("PR_RECRM_F_TYPES_SELECT_NOTE"));
+$arAllOptions [] = array("pr_recrm_d_rep",			GetMessage("PR_RECRM_F_DESC_REP"),		array("textarea", "5", "40"), 			GetMessage("PR_RECRM_F_DESC_REP_NOTE"));
+$arAllOptions [] = array("pr_recrm_last_upd",		GetMessage("PR_RECRM_F_LAST_UPD"),		array("text"), 							GetMessage("PR_RECRM_F_LAST_UPD_NOTE"));
+
 foreach($TYPES AS $TYPE_k => $TYPE_v)
 {
 	$arAllOptions[] = array(
@@ -140,24 +142,24 @@ if($REQUEST_METHOD=="POST" && strlen($Update.$Apply.$RestoreDefaults) > 0 && $RI
 if($RIGHT=="W")
 {
 
-	if(count($SELECT_T) == 0) /* Ïðîâåðêà âûáðàííûõ òèïîâ */
+	if(count($SELECT_T) == 0) /* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… Ñ‚Ð¸Ð¿Ð¾Ð² */
 	{
 		$error = array('progress' => '10', 'message' => GetMessage("PR_RECRM_ERR_NOT_SELECT_TYPES"));
 	}
-	elseif(count($CHECK_IB) > 0) /* Ïðîâåðêà èíôîáëîêîâ*/
+	elseif(count($CHECK_IB) > 0) /* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ¾Ð²*/
 	{
 		$error = array('progress' => '30', 'message' => GetMessage("PR_RECRM_ERR_NOT_IB_TYPES") . ": " . implode(',',$CHECK_IB));
 	}
-	elseif($GET_KEY == '') /* Ïðîâåðêà êëþ÷à äëÿ ReCrm */
+	elseif($GET_KEY == '') /* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÐºÐ»ÑŽÑ‡Ð° Ð´Ð»Ñ ReCrm */
 	{
 		$error = array('progress' => '60', 'message' => GetMessage("PR_RECRM_ERR_NOT_FOUND_KEY"));
 	}
-	elseif($CHECK_KEY === false) /* Ïðîâåðêà óêàçàííîãî êëþ÷à äëÿ ReCrm */
+	elseif($CHECK_KEY === false) /* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ð¾Ð³Ð¾ ÐºÐ»ÑŽÑ‡Ð° Ð´Ð»Ñ ReCrm */
 	{
 		$error = array('progress' => '95', 'message' => GetMessage("PR_RECRM_ERR_BAD_KEY"));
 	}
 	
-	/* Èìïîðò èç ReCrm */	
+	/* Ð˜Ð¼Ð¿Ð¾Ñ€Ñ‚ Ð¸Ð· ReCrm */	
 	if($ACTION == 'import_el' AND count($error) == 0)
 	{
 		$STATUS = $RECRM->importIBEl(0, 0, $_GET['start']);
@@ -198,7 +200,7 @@ $tabControl->Begin();
 /* Tab Index */
 $tabControl->BeginNextTab();
 
-	if(count($error) > 0) /* Îøèáêè */
+	if(count($error) > 0) /* ÐžÑˆÐ¸Ð±ÐºÐ¸ */
 	{
 		echo CAdminMessage::ShowMessage(array(
 			"MESSAGE" 			=> $error['message'],
@@ -231,7 +233,14 @@ $tabControl->BeginNextTab();
 			}
 			else /* Start Import Btn */
 			{
-				echo '<a href="'.$CUR_MOD_PAGE.'&action=import_el&types='.implode(',', $SELECT_T).'&rand='.time().'&start=Y#sc" class="adm-btn adm-btn-save adm-btn-add">'.GetMessage('PR_RECRM_BTN_IMPORT').'</a><br>';
+				if(defined("PR_RECRM_CLOSE"))
+				{
+					echo CAdminMessage::ShowMessage(PR_RECRM_CLOSE);
+				}
+				else
+				{
+					echo '<a href="'.$CUR_MOD_PAGE.'&action=import_el&types='.implode(',', $SELECT_T).'&rand='.time().'&start=Y#sc" class="adm-btn adm-btn-save adm-btn-add">'.GetMessage('PR_RECRM_BTN_IMPORT').'</a><br>';
+				}
 			}
 			/* Last Upd */
 			echo '
@@ -296,6 +305,24 @@ $tabControl->BeginNextTab();
 				foreach($type[1] AS $key => $value)
 				{
 					echo '<option value="'.htmlspecialcharsbx($key).'"'.(($key==$val) ? ' selected="selected"' : '').'>'.htmlspecialcharsEx($value).'</option>';
+				}
+				?>
+				</select>
+			<?
+			}
+			elseif($type[0]=="selectboxgroup")
+			{
+			?>
+				<select name="<?=htmlspecialcharsbx($arOption[0])?>">
+				<?
+				foreach($type[1] AS $key => $value)
+				{
+					echo '<optgroup label="'.htmlspecialcharsbx($key).'">';
+					foreach($value AS $k => $v)
+					{
+						echo '<option value="'.htmlspecialcharsbx($k).'"'.(($k==$val) ? ' selected="selected"' : '').'>'.htmlspecialcharsEx($v).'</option>';
+					}
+					echo '</optgroup>';
 				}
 				?>
 				</select>
