@@ -11,7 +11,7 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 
-/** .item #recrm_el_{id} íåîáõîäèì äëÿ ðàáîòû êàðòû */
+/** .item #recrm_el_{id} Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼ Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ ÐºÐ°Ñ€Ñ‚Ñ‹ */
 
 $this->setFrameMode(true);
 ?>

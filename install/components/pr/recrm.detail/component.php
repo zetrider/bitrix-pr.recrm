@@ -343,13 +343,13 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 				if($arParams["DETAIL_PROPS_EMPTY"] != "Y" AND $prop['VALUE'] == '')
 					continue;
 				
-				/* Преобразуем данные для отображения */
+				/* РџСЂРµРѕР±СЂР°Р·СѓРµРј РґР°РЅРЅС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ */
 
 				/* boll */
 				if($prop['VALUE'] === 'true')
-					$prop['VALUE'] = 'Да';
+					$prop['VALUE'] = 'Р”Р°';
 				if($prop['VALUE'] === 'false')
-					$prop['VALUE'] = 'Нет';
+					$prop['VALUE'] = 'РќРµС‚';
 				
 				/* arr */
 				if(is_array($prop['VALUE']))

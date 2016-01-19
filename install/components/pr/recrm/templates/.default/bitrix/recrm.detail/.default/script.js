@@ -24,7 +24,7 @@
 				var ReCrmObjDom = '';
 				$.each(data, function(i, o)
 				{
-					ReCrmObjDom = $('#recrm_el_' + o['ID'] + ' .title');  // меняй на свое
+					ReCrmObjDom = $('#recrm_el_' + o['ID'] + ' .title');  // РјРµРЅСЏР№ РЅР° СЃРІРѕРµ
 
 					ReCrmGeoObjects[i] = new ymaps.GeoObject(
 					{

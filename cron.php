@@ -8,10 +8,11 @@
 #################################################
 ?>
 <?
+define("PR_CRON", true);
 define("NO_KEEP_STATISTIC", true);
 define("NOT_CHECK_PERMISSIONS",true);
-define("NO_BITRIX_AUTOLOAD", True);
-define('BX_NO_ACCELERATOR_RESET', true);
+define("NO_BITRIX_AUTOLOAD", true);
+define("BX_NO_ACCELERATOR_RESET", true);
 
 @ignore_user_abort(true);
 

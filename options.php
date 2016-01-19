@@ -21,7 +21,11 @@ $APPLICATION->SetAdditionalCSS("/bitrix/js/pr.recrm/jquery-ui/jquery-ui.min.css"
 $APPLICATION->AddHeadScript('/bitrix/js/pr.recrm/jquery-ui/jquery-ui.min.js');
 $APPLICATION->AddHeadScript('/bitrix/js/pr.recrm/pr.recrm.js');
 
+$STATUS 		= false;
+$NOTE 			= array('TRUE' => array(), 'FALSE' => array());
+$ERROR 			= array();
 $RECRM 			= new prReCrmData;
+$LAST_LOAD 		= $RECRM->getLastLoad();
 $LAST_UPD 		= $RECRM->getLastUpdate();
 $SELECT_T 		= $RECRM->getSelectTypes();
 $SELECT_IB 		= $RECRM->getIB(true);
@@ -31,12 +35,9 @@ $GET_KEY 		= $RECRM->getKey();
 $TYPES 			= prReCrmProps::getTypes('name');
 $CUR_MOD_PAGE 	= $APPLICATION->GetCurPage().'?lang='.LANGUAGE_ID.'&mid='.urlencode($module_id);
 $ACTION 		= htmlspecialcharsEx($_GET['action']);
-$STATUS 		= false;
-$wLocation 		= '';
-$wTime 			= 3000;
-$error 			= array();
 $arWRK 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
 $arSH 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
+$arSS 			= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
 $arCROP 		= array('0' => GetMessage('PR_RECRM_N'), '1' => GetMessage('PR_RECRM_Y'));
 $arTimeZone 	= prReCrmProps::getTimeZone();
 
@@ -47,9 +48,11 @@ $arAllOptions [] = array("pr_recrm_img_h",			GetMessage("PR_RECRM_F_IMG_H"),			a
 $arAllOptions [] = array("pr_recrm_img_crop",		GetMessage("PR_RECRM_F_IMG_CROP"),		array("selectbox",$arCROP), 			GetMessage("PR_RECRM_F_IMG_CROP_NOTE"));
 $arAllOptions [] = array("pr_recrm_img_wrk",		GetMessage("PR_RECRM_F_IMG_WRK"),		array("selectbox",$arWRK), 				GetMessage("PR_RECRM_F_IMG_WRK_NOTE"));
 $arAllOptions [] = array("pr_recrm_search_hidden",	GetMessage("PR_RECRM_SEARCH_HIDDEN"),	array("selectbox",$arSH), 				GetMessage("PR_RECRM_SEARCH_HIDDEN_NOTE"));
+$arAllOptions [] = array("pr_recrm_search_status",	GetMessage("PR_RECRM_SEARCH_STATUS"),	array("selectbox",$arSH), 				GetMessage("PR_RECRM_SEARCH_STATUS_NOTE"));
 $arAllOptions [] = array("pr_recrm_timezone",		GetMessage("PR_RECRM_TIMEZONE"),		array("selectboxgroup", $arTimeZone),	GetMessage("PR_RECRM_TIMEZONE_NOTE"));
 $arAllOptions [] = array("pr_recrm_types",			GetMessage("PR_RECRM_F_TYPES_SELECT"),	array("multiple", $TYPES), 				GetMessage("PR_RECRM_F_TYPES_SELECT_NOTE"));
 $arAllOptions [] = array("pr_recrm_d_rep",			GetMessage("PR_RECRM_F_DESC_REP"),		array("textarea", "5", "40"), 			GetMessage("PR_RECRM_F_DESC_REP_NOTE"));
+$arAllOptions [] = array("pr_recrm_last_load",		GetMessage("PR_RECRM_F_LAST_LOAD"),		array("text"), 							GetMessage("PR_RECRM_F_LAST_LOAD_NOTE"));
 $arAllOptions [] = array("pr_recrm_last_upd",		GetMessage("PR_RECRM_F_LAST_UPD"),		array("text"), 							GetMessage("PR_RECRM_F_LAST_UPD_NOTE"));
 
 foreach($TYPES AS $TYPE_k => $TYPE_v)
@@ -72,7 +75,7 @@ $aTabs = array(
 $tabControl = new CAdminTabControl("tabControl", $aTabs);
 
 /* Update Options */
-if($REQUEST_METHOD=="POST" && strlen($Update.$Apply.$RestoreDefaults) > 0 && $RIGHT=="W" && check_bitrix_sessid())
+if($REQUEST_METHOD=="POST" AND strlen($Update.$Apply.$RestoreDefaults) > 0 AND $RIGHT=="W" AND check_bitrix_sessid())
 {
     require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/perfmon/prolog.php");
 	if (isset($_REQUEST["RestoreDefaults"]))
@@ -142,53 +145,83 @@ if($REQUEST_METHOD=="POST" && strlen($Update.$Apply.$RestoreDefaults) > 0 && $RI
 if($RIGHT=="W")
 {
 
-	if(count($SELECT_T) == 0) /* Проверка выбранных типов */
+	/* Проверка выбранных типов */
+	if(count($SELECT_T) == 0)
 	{
-		$error = array('progress' => '10', 'message' => GetMessage("PR_RECRM_ERR_NOT_SELECT_TYPES"));
+		$ERROR = array('PROGRESS' => '10', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_SELECT_TYPES"));
 	}
-	elseif(count($CHECK_IB) > 0) /* Проверка инфоблоков*/
+	/* Проверка инфоблоков*/
+	elseif(count($CHECK_IB) > 0)
 	{
-		$error = array('progress' => '30', 'message' => GetMessage("PR_RECRM_ERR_NOT_IB_TYPES") . ": " . implode(',',$CHECK_IB));
+		$ERROR = array('PROGRESS' => '30', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_IB_TYPES") . ": " . implode(',',$CHECK_IB));
 	}
-	elseif($GET_KEY == '') /* Проверка ключа для ReCrm */
+	/* Проверка ключа для ReCrm */
+	elseif($GET_KEY == '')
 	{
-		$error = array('progress' => '60', 'message' => GetMessage("PR_RECRM_ERR_NOT_FOUND_KEY"));
+		$ERROR = array('PROGRESS' => '60', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_FOUND_KEY"));
 	}
-	elseif($CHECK_KEY === false) /* Проверка указанного ключа для ReCrm */
+	/* Проверка указанного ключа для ReCrm */
+	elseif($CHECK_KEY === false)
 	{
-		$error = array('progress' => '95', 'message' => GetMessage("PR_RECRM_ERR_BAD_KEY"));
+		$ERROR = array('PROGRESS' => '95', 'MESSAGE' => GetMessage("PR_RECRM_ERR_BAD_KEY"));
 	}
 	
-	/* Импорт из ReCrm */	
-	if($ACTION == 'import_el' AND count($error) == 0)
+	/* Получим данные из ReCrm */
+	if($ACTION == 'MakeTmpData' AND count($ERROR) == 0 AND !defined("PR_RECRM_CLOSE"))
 	{
-		$STATUS = $RECRM->importIBEl(0, 0, $_GET['start']);
-		//var_dump($STATUS);
+		$MakeTmpData = $RECRM->MakeTmpData();
+		if($MakeTmpData === false)
+		{
+			$NOTE ['FALSE'][] = GetMessage("PR_RECRM_CREATE_TMP_FALSE");
+		}
+		else
+		{
+			$NOTE ['TRUE'][] = GetMessage("PR_RECRM_CREATE_TMP_TRUE");
+		}
+	}
+
+	/* Импорт из временных файлов */
+	if($ACTION == 'ImportStart' AND count($ERROR) == 0 AND !defined("PR_RECRM_CLOSE"))
+	{
+		$STATUS = $RECRM->importIBEl(0, $_GET['start']);
 		
-		if($STATUS === true)
+		if(is_array($STATUS))
 		{
-			$wLocation 	= $CUR_MOD_PAGE.'&action=success#sc';
-			$wTime 		= 0;
-		}
-		elseif(is_array($STATUS))
-		{				
-			$wLocation = $CUR_MOD_PAGE.'&action=import_el&types='.implode(',', $STATUS['IBT']).'&rand='.time().'&step='.$STATUS['STEP'].'#sc';
+			$NOTE ['TRUE'] = $STATUS;
+
+			if(defined("PR_RECRM_DEBUG"))
+			{
+				AddMessage2Log($STATUS);
+			}
+
+			echo '
+			<script type="text/javascript">
+			function DoNext()
+			{
+				window.location="'.$CUR_MOD_PAGE.'&action=ImportStart&rand='.time().'#sc";
+			}
+			setTimeout(\'DoNext()\', 3000);
+			</script>
+			';
 		}
 	}
-	
-	if($wLocation != '')
+
+	/* Удаление временного файла */
+	if($ACTION == 'tmpDbDelete' AND count($ERROR) == 0)
 	{
-		echo '
-		<script type="text/javascript">
-		function DoNext()
+		$TMP_DB_HASH = $_GET['tmpDbHash'];
+		$TMP_DB_TYPE = $_GET['tmpDbType'];
+		$FILES = $RECRM->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
+		if (array_key_exists($TMP_DB_HASH, $FILES[$TMP_DB_TYPE]))
 		{
-			window.location="'.$wLocation.'";
+			$RECRM->TmpDb(array('TYPE' => 'D', 'FILE' => $FILES[$TMP_DB_TYPE][$TMP_DB_HASH]));
+			unset($FILES[$TMP_DB_TYPE][$TMP_DB_HASH]);
+			$RECRM->TmpDb(array('TYPE' => 'W', 'FILE' => 'recrm_files', 'DATA' => $FILES));
+
 		}
-		setTimeout(\'DoNext()\', '.$wTime.');
-		</script>
-		';
 	}
 }
+date_default_timezone_set($RECRM->getTZ());
 ?>
 
 <h1><?=GetMessage("PR_RECRM_MODULE_NAME"); ?></h1>
@@ -200,27 +233,34 @@ $tabControl->Begin();
 /* Tab Index */
 $tabControl->BeginNextTab();
 
-	if(count($error) > 0) /* Ошибки */
+	if(count($ERROR) > 0) /* Ошибки */
 	{
 		echo CAdminMessage::ShowMessage(array(
-			"MESSAGE" 			=> $error['message'],
+			"MESSAGE" 			=> $ERROR['MESSAGE'],
 			"DETAILS" 			=> "#PROGRESS_BAR#",
 			"HTML" 				=> true,
 			"TYPE" 				=> "PROGRESS",
 			"PROGRESS_TOTAL" 	=> 100,
-			"PROGRESS_VALUE" 	=> $error['progress'],
+			"PROGRESS_VALUE" 	=> $ERROR['PROGRESS'],
 		));
 	}
 	else
 	{
+		if(count($NOTE['TRUE']) > 0)
+			echo CAdminMessage::ShowNote(implode("\r\n", $NOTE['TRUE']));
+		
+		if(count($NOTE['FALSE']))
+			echo CAdminMessage::ShowMessage(implode("\r\n", $NOTE['FALSE']));
+		
+		
 		if(is_array($STATUS)) /* Step Msg */
 		{
-			echo '<p>'.GetMessage("PR_RECRM_IMP_STEP").' '.$STATUS['STEP'].'.<br><br> '.$STATUS['MESS'].'</p><br><div class="pr_loader"></div>';
+			echo '<br><div class="pr_loader"></div>';
 			echo CAdminMessage::ShowMessage(GetMessage('PR_RECRM_IMP_STEP_NOTE'));
 		}
 		else
 		{
-			if($ACTION == 'success') /* Import Success */
+			if($STATUS === true) /* Import Success */
 			{
 				echo CAdminMessage::ShowMessage(array(
 					"MESSAGE" 			=> GetMessage('PR_RECRM_IMP_SUCCESS'),
@@ -239,16 +279,55 @@ $tabControl->BeginNextTab();
 				}
 				else
 				{
-					echo '<a href="'.$CUR_MOD_PAGE.'&action=import_el&types='.implode(',', $SELECT_T).'&rand='.time().'&start=Y#sc" class="adm-btn adm-btn-save adm-btn-add">'.GetMessage('PR_RECRM_BTN_IMPORT').'</a><br>';
+					echo '<a href="'.$CUR_MOD_PAGE.'&action=MakeTmpData&rand='.time().'#sc" class="adm-btn adm-btn-save adm-btn-add">'.GetMessage('PR_RECRM_BTN_LOAD').'</a><br><br>';
+
+					echo '<a href="'.$CUR_MOD_PAGE.'&action=ImportStart&rand='.time().'&start=Y#sc" class="adm-btn adm-btn-save adm-btn-add">'.GetMessage('PR_RECRM_BTN_IMPORT').'</a><br>';
 				}
 			}
-			/* Last Upd */
-			echo '
-				<h3>'.GetMessage('PR_RECRM_STAT_LIST').':</h3>
-				<ul>
-					<li>'.GetMessage('PR_RECRM_STAT_LAST_UPD').': '.(($LAST_UPD == 0) ? GetMessage('PR_RECRM_STAT_LAST_UPD_NULL') : date('d.m.Y - H:i:s', $LAST_UPD)) . '</li>
-				</ul>
-			';
+		}
+
+		$FILES = $RECRM->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
+		echo '<h3>'.GetMessage('PR_RECRM_STAT_LIST').':</h3>
+		<ul>
+			<li><p>'.GetMessage('PR_RECRM_STAT_LAST_LOAD').': '.(($LAST_LOAD == 0) ? GetMessage('PR_RECRM_STAT_LAST_LOAD_NULL') : date('d.m.Y - H:i:s', $LAST_LOAD)) . '</p></li>
+			<li><p>'.GetMessage('PR_RECRM_STAT_LAST_UPD').': '.(($LAST_UPD == 0) ? GetMessage('PR_RECRM_STAT_LAST_UPD_NULL') : date('d.m.Y - H:i:s', $LAST_UPD)) . '</p></li>
+		</ul>
+		<h3>'.GetMessage('PR_RECRM_STAT_LIST_FILES').': '.count($FILES['SITE']).' </h3>';
+		if(count($FILES['SITE']) > 0)
+		{
+			$i = 1;
+			foreach($FILES['SITE'] AS $FILE_HASH => $FILE)
+			{
+				$FILE_DATA = $RECRM->TmpDb(array('TYPE' => 'R', 'FILE' => $FILE));
+				
+				echo sprintf(GetMessage('PR_RECRM_STAT_TMP_INFO'), $i).' '.(($FILE_DATA['UPDATE_TIME'] == 0) ? GetMessage('PR_RECRM_STAT_FIRST_IMPORT') : date('d.m.Y - H:i:s', $FILE_DATA['UPDATE_TIME'])).' <a href="'.$CUR_MOD_PAGE.'&action=tmpDbDelete&tmpDbType=SITE&tmpDbHash='.$FILE_HASH.'#sc" onclick="return confirm(\''.GetMessage('PR_RECRM_SURE').'\')">['.GetMessage('PR_RECRM_DELETE').']</a><br><br>';
+				
+				foreach($FILE_DATA['DATA'] AS $TYPE => $ELEMENTS)
+				{
+					echo sprintf(GetMessage('PR_RECRM_STAT_TMP_ELEMENTS'), $TYPES[$TYPE], $SELECT_IB[$ELEMENTS['IBLOCK_ID']], count($ELEMENTS['NEW']), count($ELEMENTS['UPD']), count($ELEMENTS['DEL'])).'<br><br>';
+				}
+				echo '<hr>';
+				$i++;
+			}
+		}
+		echo '
+		<h3>'.GetMessage('PR_RECRM_STAT_CRON_FILES').': '.count($FILES['CRON']).' </h3>';
+		if(count($FILES['CRON']) > 0)
+		{
+			$i = 1;
+			foreach($FILES['CRON'] AS $FILE_HASH => $FILE)
+			{
+				$FILE_DATA = $RECRM->TmpDb(array('TYPE' => 'R', 'FILE' => $FILE));
+
+				echo sprintf(GetMessage('PR_RECRM_STAT_TMP_INFO'), $i).' '.(($FILE_DATA['UPDATE_TIME'] == 0) ? GetMessage('PR_RECRM_STAT_FIRST_IMPORT') : date('d.m.Y - H:i:s', $FILE_DATA['UPDATE_TIME'])).' <a href="'.$CUR_MOD_PAGE.'&action=tmpDbDelete&tmpDbType=CRON&tmpDbHash='.$FILE_HASH.'#sc" onclick="return confirm(\''.GetMessage('PR_RECRM_SURE').'\')">['.GetMessage('PR_RECRM_DELETE').']</a><br><br>';
+
+				foreach($FILE_DATA['DATA'] AS $TYPE => $ELEMENTS)
+				{
+					echo sprintf(GetMessage('PR_RECRM_STAT_TMP_ELEMENTS'), $TYPES[$TYPE], $SELECT_IB[$ELEMENTS['IBLOCK_ID']], count($ELEMENTS['NEW']), count($ELEMENTS['UPD']), count($ELEMENTS['DEL'])).'<br><br>';
+				}
+				echo '<hr>';
+				$i++;
+			}
 		}
 	}
 	/* AD */
@@ -264,6 +343,16 @@ $tabControl->BeginNextTab();
 /* Tab Setting */
 $tabControl->BeginNextTab();
 	
+	if(defined("PR_RECRM_CLOSE_OPTIONS"))
+	{
+		echo '
+		<tr>
+			<td colspan="2">
+			'.CAdminMessage::ShowMessage(PR_RECRM_CLOSE_OPTIONS).'
+			</td>
+		</tr>
+		';
+	}
 	$arNotes = array();
 	foreach($arAllOptions as $arOption)
 	{
@@ -346,7 +435,9 @@ $tabControl->BeginNextTab();
 			?>
 		</td>
 	</tr>
-	<? } ?>
+	<?
+	}
+	?>
 	
 <?
 /* Tab Properties */
@@ -355,15 +446,15 @@ $tabControl->BeginNextTab();
 <p><?=GetMessage("PR_RECRM_PROPS_DESC")?></p>
 
 <?
-	if(count($error) > 0)
+	if(count($ERROR) > 0)
 	{
 		echo CAdminMessage::ShowMessage(array(
-			"MESSAGE" 			=> $error['message'],
+			"MESSAGE" 			=> $ERROR['MESSAGE'],
 			"DETAILS" 			=> "#PROGRESS_BAR#",
 			"HTML" 				=> true,
 			"TYPE" 				=> "PROGRESS",
 			"PROGRESS_TOTAL" 	=> 100,
-			"PROGRESS_VALUE" 	=> $error['progress'],
+			"PROGRESS_VALUE" 	=> $ERROR['PROGRESS'],
 		));
 	}
 	else
