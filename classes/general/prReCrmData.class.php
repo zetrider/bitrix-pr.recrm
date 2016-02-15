@@ -199,25 +199,14 @@ class prReCrmData
 	public function cron()
 	{
 		$RETURN = false;
-		/* Проверка чтобы не забить процессами */
-		$FILES = $this->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
-		if(count($FILES['CRON']) >= 1)
+		if(defined("PR_RECRM_DEBUG"))
 		{
-			if(defined("PR_RECRM_DEBUG"))
-			{
-				AddMessage2Log('Cront tasks >= 1');
-			}
-			$RETURN = false;
+			AddMessage2Log('Start Cron');
 		}
-		else
+		$FILE = $this->MakeTmpData(array('CRON' => 'Y'));
+		if(is_array($FILE))
 		{
-			if(defined("PR_RECRM_DEBUG"))
-			{
-				AddMessage2Log('Start Cron');
-			}
-			$FILE = $this->MakeTmpData(array('CRON' => 'Y'));
-			if(is_array($FILE))
-				$RETURN = $this->importIBEl('Y', 0);
+			$RETURN = $this->importIBEl('Y', 0);
 		}
 		return $RETURN;
 	}
@@ -653,7 +642,9 @@ class prReCrmData
 		elseif($arParams['TYPE'] == 'R'):
 
 			if(!file_exists($FILE))
+			{
 				$this->TmpDb(array('TYPE' => 'W', 'FILE' => $arParams['FILE'], 'DATA' => array()));
+			}
 
 			$READ 	= file_get_contents($FILE);
 			$ARR 	= unserialize($READ);
@@ -666,7 +657,10 @@ class prReCrmData
 		
 		elseif($arParams['TYPE'] == 'D'):
 
-			if(file_exists($FILE)) unlink($FILE);
+			if(file_exists($FILE))
+			{
+				unlink($FILE);
+			}
 
 		endif;
 	}
@@ -685,7 +679,8 @@ class prReCrmData
 
 		$arData = array(
 			'UPDATE_TIME' 	=> $UPD_TIME,
-			'DATA' 			=> array()
+			'DATA' 			=> array(),
+			'START' 		=> 'N',
 		);
 
 		/* Выбранные типы для импорта */
@@ -711,15 +706,13 @@ class prReCrmData
 			$json_type 		= $TYPE;
 			if($TYPE == 'estate')
 			{
-				$json_type = 'estatesearch';
+				$json_type 		= 'estatesearch';
+				$json_params 	= array('search_hidden' => $this->getSH(), 'start' => '0', 'count' => '10000000');
 			}
 			elseif($TYPE == 'contragent')
 			{
 				$json_type = 'contragentall';
 			}	
-			
-			if($TYPE == 'estate')
-				$json_params 	= array('search_hidden' => $this->getSH(), 'start' => '0', 'count' => '10000000');
 			
 			/* Из CRM */
 			/* Если выгружать объекты со всеми статусами */
@@ -743,7 +736,7 @@ class prReCrmData
 			$ReCrmIDs 		= $this->convertArrCheck($json_type, $json_res) + $ReCrmIDsS1 + $ReCrmIDsS2;
 			$ReCrmIDsUpd 	= $ReCrmIDs;
 
-			/* Для измененных объектов, изем только те, которые позднее последнего запроса к CRM занесенных в очередь на выгрузку */
+			/* Для измененных объектов, ищем только те, которые позднее последнего запроса к CRM занесенных в очередь на выгрузку */
 			if($LAST_LOAD > 0 AND $TYPE == 'estate')
 			{
 				$json_params ['date_from'] 	= date('j.m.Y H:i', $LAST_LOAD);
@@ -767,7 +760,7 @@ class prReCrmData
 				$json_res_upd 	= $this->getJson($json_type, $json_params);
 				$ReCrmIDsUpd 	= $this->convertArrCheck($json_type, $json_res_upd) + $ReCrmIDsS1 + $ReCrmIDsS2;
 			}
-			
+
 			/* Объекты из БД */
 			$DBArr 	= $this->getEliB($IBLOCK_ID);
 			
@@ -775,9 +768,22 @@ class prReCrmData
 			$DEL 	= array();
 			/* На случай, если упала CRM и не получено ни одного объекта */
 			if(count($ReCrmIDs) > 0)
-			$DEL 	= array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
+			{
+				$DEL = array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
+			}
+			/* Если на удаление объектов много, не удалять: TODO исправить костыль */
+			$HALF_COUNT = intval($DBArr['id_btrx']) / 2;
+			if(count($DEL) >= $HALF_COUNT)
+			{
+				if(defined("PR_RECRM_DEBUG"))
+				{
+					AddMessage2Log('WARNING: To remove: ' . count($DEL));
+				}
+				$DEL = array();
+			}
 			
 			/* Ищем элементы, которые нужно добавить, которых нет в БД но есть в CRM */
+			$NEW 	= array();
 			$NEW 	= array_diff_assoc($ReCrmIDs, $DBArr['id_recrm']);
 			
 			/* Элементы, которые нужно обновить, убираем {удалить + новые} из массива ID Recrm */
@@ -840,6 +846,13 @@ class prReCrmData
 		{
 			$FILE 	= array_shift($FILES[$FILES_TYPE]);
 			$DATA 	= $this->TmpDb(array('TYPE' => 'R', 'FILE' => $FILE));
+
+			if($DATA['START'] != 'Y')
+			{
+				$DATA['START'] = 'Y';
+				$this->TmpDb(array('TYPE' => 'W', 'FILE' => $FILE, 'DATA' => $DATA));
+			}
+
 			foreach($DATA['DATA'] AS $TYPE_KEY => $TYPE_DATA)
 			{
 				$TYPE_IDS = $this->is_a($TYPE_DATA['NEW']) + $this->is_a($TYPE_DATA['UPD']) + $this->is_a($TYPE_DATA['DEL']);

@@ -55,7 +55,7 @@ if(!preg_match('/^(asc|desc|nulls)(,asc|,desc|,nulls){0,1}$/i', $arParams["SORT_
 
 $arParams["SORT_BY2"] = trim($arParams["SORT_BY2"]);
 if(strlen($arParams["SORT_BY2"]) <= 0)
-	$arParams["SORT_BY1"] = "";
+	$arParams["SORT_BY2"] = "";
 
 if(!preg_match('/^(asc|desc|nulls)(,asc|,desc|,nulls){0,1}$/i', $arParams["SORT_ORDER2"]))
 	$arParams["SORT_ORDER2"] = "";
