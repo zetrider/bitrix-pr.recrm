@@ -772,7 +772,7 @@ class prReCrmData
 				$DEL = array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
 			}
 			/* Если на удаление объектов много, не удалять: TODO исправить костыль */
-			$HALF_COUNT = intval($DBArr['id_btrx']) / 2;
+			$HALF_COUNT = count($DBArr['id_btrx']) / 2;
 			if(count($DEL) >= $HALF_COUNT)
 			{
 				if(defined("PR_RECRM_DEBUG"))
