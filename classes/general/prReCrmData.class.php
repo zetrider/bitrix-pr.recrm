@@ -385,7 +385,20 @@ class prReCrmData
 			$arr 		= array('id_recrm' => array(), 'id_btrx' => array());
 			$arFilter 	= array("IBLOCK_ID" => $IBLOCK_ID);
 			$arSelect 	= array("ID", "PROPERTY_id");
-			$res 		= CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+
+			/*
+			Callback
+				has params arFilter - array
+			*/
+			$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeGetEliBFilter");
+			while($arHandler = $rsHandlers->Fetch())
+			{
+				$forEvent = $arFilter;
+				$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
+				$arFilter = $resEvent;
+			}
+
+			$res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 			while($ob = $res->GetNextElement())
 			{
 				$arF 						= $ob->GetFields();
