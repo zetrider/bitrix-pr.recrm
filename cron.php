@@ -20,7 +20,7 @@ $_SERVER["DOCUMENT_ROOT"] = realpath(dirname(__FILE__)."/../../..");
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
 @set_time_limit(3600);
-ini_set('max_execution_time', 3600); 
+ini_set('max_execution_time', 3600);
 
 $module_id 	= "pr.recrm";
 

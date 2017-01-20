@@ -13,7 +13,7 @@ class prReCrmProps
 {
 
 	static $module_id = "pr.recrm";
-	
+
 	public static function getTypes($type = '', $name = '')
 	{
 		$arr = array(
@@ -31,6 +31,7 @@ class prReCrmProps
 				'estatephoto' 		=> 'picture/EstatePhoto',
 				'estatephotolayout'	=> 'picture/EstateLayout',
 				'agent' 			=> 'agent/all',
+				'agentinfo' 		=> 'agent/info',
 				'agentphoto' 		=> 'picture/AgentPhoto',
 				//'contragentsearch' 	=> 'contragent/search',
 				'contragent' 		=> 'contragent/info',
@@ -51,6 +52,7 @@ class prReCrmProps
 				'estatephoto' 		=> 'pictures',
 				'estatephotolayout'	=> 'pictures',
 				'agent' 			=> 'agents',
+				'agentinfo' 		=> 'agent',
 				'agentphoto' 		=> 'pictures',
 				//'contragentsearch' 		=> '',
 				'contragent' 		=> 'contragent',
@@ -87,12 +89,12 @@ class prReCrmProps
 			);
 			$arr = ExecuteModuleEvent($arHandler, $forEvent);
 		}
-		
+
 		if($name == '') return $arr[$type];
-		
+
 		return $arr[$type][$name];
 	}
-	
+
 	public static function getPropsNames($key = '')
 	{
 		$arr = array(
@@ -128,12 +130,12 @@ class prReCrmProps
 			'meta_keywords' 		=> GetMessage("PR_RECRM_PROP_META_KEYWORDS"),
 			'meta_title' 			=> GetMessage("PR_RECRM_PROP_META_TITLE"),
 		);
-		
+
 		if($arr[$key] != '') return $arr[$key];
-		
+
 		return $key;
 	}
-	
+
 	public static function getTimeZone($key = '')
 	{
 		$arr = array(
@@ -556,10 +558,10 @@ class prReCrmProps
 				"Pacific/Tongatapu" 	            => "(+13:00 UTC) Tongatapu",
 			),
 		);
-		
+
 		if($arr[$key] != '') return $arr[$key];
-		
+
 		return $arr;
 	}
-	
+
 }

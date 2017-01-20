@@ -13,7 +13,7 @@ class prReCrmData
 {
     static $module_id = "pr.recrm";
 
-	/* РџР°СЂР°РјРµС‚СЂС‹ */
+	/* Параметры */
 	public function getParams($arParams = array())
 	{
 		$RES 	= '';
@@ -107,43 +107,43 @@ class prReCrmData
 		return $PARAMS;
 	}
 
-	/* РљР»СЋС‡ */
+	/* Ключ */
 	public function getKey()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_key'));
 	}
 
-	/* Р§С‚Рѕ РІС‹Р±СЂР°РЅРѕ РґР»СЏ РІС‹РіСЂСѓР·РєРё */
+	/* Что выбрано для выгрузки */
 	public function getSelectTypes()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_types'));
 	}
 
-	/* Р”Р°С‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ */
+	/* Дата обновления */
 	public function getLastUpdate()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_last_upd'));
 	}
 
-	/* Р”Р°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ Р·Р°РїСЂРѕСЃР° Рє CRM */
+	/* Дата последнего запроса к CRM */
 	public function getLastLoad()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_last_load'));
 	}
 
-	/* РЎС‚Р°СЂС‚ РѕР±РЅРѕРІР»РµРЅРёСЏ */
+	/* Старт обновления */
 	public function getStartUpdate()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_start_upd'));
 	}
 
-	/* Р’СЂРµРјСЏ С€Р°РіР° */
+	/* Время шага */
 	public function getStepTime()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_s_step'));
 	}
 
-	/* Р Р°Р·РјРµСЂС‹ РґР»СЏ РїСЂРµРІСЊСЋ */
+	/* Размеры для превью */
 	public function getCoverSize()
 	{
 		return array(
@@ -152,50 +152,50 @@ class prReCrmData
 		);
 	}
 
-	/* РљР°РґСЂРёСЂРѕРІР°РЅРёРµ РіР»Р°РІРЅРѕРіРѕ С„РѕС‚Рѕ */
+	/* Кадрирование главного фото */
 	public function getCrop()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_img_crop'));
 	}
 
-	/* Р’РѕРґРЅС‹Р№ Р·РЅР°Рє */
+	/* Водный знак */
 	public function getWRK()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_img_wrk'));
 	}
 
-	/* Р’С‹РіСЂСѓР¶Р°С‚СЊ СЃРєСЂС‹С‚С‹Рµ РѕР±СЉРµРєС‚С‹ */
+	/* Выгружать скрытые объекты */
 	public function getSH()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_search_hidden'));
 	}
 
-	/* Р’С‹РіСЂСѓР¶Р°С‚СЊ СЃРѕ РІСЃРµРјРё СЃС‚Р°С‚СѓСЃР°РјРё */
+	/* Выгружать со всеми статусами */
 	public function getSS()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_search_status'));
 	}
 
-	/* Р’С‹РіСЂСѓР¶Р°С‚СЊ СЃРєСЂС‹С‚С‹Рµ РѕР±СЉРµРєС‚С‹ */
+	/* Выгружать скрытые объекты */
 	public function getTZ()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_timezone'));
 	}
 
-	/* Р§С‚Рѕ РІС‹СЂРµР·Р°С‚СЊ РёР· РѕРїРёСЃР°РЅРёСЏ РѕР±СЉРµРєС‚Р° */
+	/* Что вырезать из описания объекта */
 	public function getDescStr()
 	{
 		return $this->getParams(array('TYPE' => 'pr_recrm_d_rep'));
 	}
 
-	/* ID РР‘ РїРѕ РєР»СЋС‡Р°Рј */
+	/* ID ИБ по ключам */
 	public function getIBId($key = '')
 	{
 		$arr = $this->getParams(array('TYPE' => 'pr_recrm_ib'));
 		return $arr[$key];
 	}
 
-	/* РљСЂРѕРЅ */
+	/* Крон */
 	public function cron()
 	{
 		$RETURN = false;
@@ -211,7 +211,7 @@ class prReCrmData
 		return $RETURN;
 	}
 
-	/* РЎРїРёСЃРѕРє РІСЃРµС… РР‘ */
+	/* Список всех ИБ */
 	public function getIB($first = false) {
 		$return 	= array();
 		if(CModule::IncludeModule("iblock"))
@@ -226,7 +226,7 @@ class prReCrmData
 		return $return;
 	}
 
-	/* РЎРїРёСЃРѕРє СЃР°Р№С‚РѕРІ */
+	/* Список сайтов */
 	public function getSiteIDs()
 	{
 		if(CModule::IncludeModule("iblock"))
@@ -241,7 +241,7 @@ class prReCrmData
 		}
 	}
 
-	/* РњР°СЃСЃРёРІ РјР°СЃСЃРёРІСѓ */
+	/* Массив массиву */
 	public function is_a($a = '', $check = false)
 	{
 		$arr = is_array($a) ? $a : array();
@@ -251,7 +251,7 @@ class prReCrmData
 		return $arr;
 	}
 
-	/* Р’СЃРµ СЃРІРѕР№СЃС‚РІР° РёРЅС„РѕР±Р»РѕРєР° */
+	/* Все свойства инфоблока */
 	public function getIBAllProps($type = '')
 	{
 		$ARR 	= array();
@@ -264,7 +264,7 @@ class prReCrmData
 		return $ARR;
 	}
 
-	/* РљРѕРЅРІРµСЂС‚РёСЂСѓРµРј С„РѕРјР°СЂ, TODO */
+	/* Конвертируем фомар, TODO */
 	public function convertUtoW($a = '')
 	{
 		if(is_array($a))
@@ -282,7 +282,7 @@ class prReCrmData
 		}
 	}
 
-	/* Р—Р°РїСЂРѕСЃ Рє API */
+	/* Запрос к API */
 	public function getJson($type = '', $params = array())
 	{
 		$key 	= $this->getKey();
@@ -342,7 +342,7 @@ class prReCrmData
 		return $result;
 	}
 
-	/* РџСЂРѕРІРµСЂРєР° API Key */
+	/* Проверка API Key */
 	public function checkKey()
 	{
 		$q = $this->getJson('key');
@@ -352,7 +352,7 @@ class prReCrmData
 		return true;
 	}
 
-	/* РџСЂРѕРІРµСЂРєР° РІС‹Р±СЂР°РЅРЅС‹С… РР‘ */
+	/* Проверка выбранных ИБ */
 	public function checkIB()
 	{
 		$ERR = array();
@@ -366,7 +366,7 @@ class prReCrmData
 		return $ERR;
 	}
 
-	/* РЈРґР°Р»СЏРµРј РёР· РјР°СЃСЃРёРІР° РјР°СЃСЃРёРІ */
+	/* Удаляем из массива массив */
 	public function unsetArrEl($arr = array(), $del = array()) {
 		foreach($del AS $k => $v)
 		{
@@ -378,7 +378,7 @@ class prReCrmData
 		return $arr;
 	}
 
-	/* Р­Р»РµРјРµРЅС‚С‹ РР‘ */
+	/* Элементы ИБ */
 	public function getEliB($IBLOCK_ID = '') {
 		if(CModule::IncludeModule("iblock"))
 		{
@@ -410,7 +410,7 @@ class prReCrmData
 		}
 	}
 
-	/* Р¤РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ IDs РёР· json: ID = ID РёР· ReCRM */
+	/* Формируем массив IDs из json: ID = ID из ReCRM */
 	public function convertArrCheck($TYPE = '', $json = array()) {
 		$new 	= array();
 		$arr 	= prReCrmProps::getTypes('arr');
@@ -424,7 +424,7 @@ class prReCrmData
 		return $new;
 	}
 
-	/* РџСЂРѕРІРµСЂРєР° СЃРІРѕР№СЃС‚ РР‘ */
+	/* Проверка свойст ИБ */
 	public function checkIBProps($TYPE = '', $PROPS = array())
 	{
 		$NEW_PROP = array();
@@ -514,23 +514,24 @@ class prReCrmData
 		}
 	}
 
-	/* РљРѕРґ СЃРІРѕР№СЃС‚РІР° */
+	/* Код свойства */
 	public function convertKeyProp($key = '') {
 		$key = strtolower($key);
 		$key = preg_replace("/[^a-z0-9_]/", "", $key);
 		return $key;
 	}
 
-	/* РРјСЏ СЃРІРѕР№СЃС‚РІР° */
+	/* Имя свойства */
 	public function convertNameProp($key = '') {
 		return prReCrmProps::getPropsNames($key);
 	}
 
-	/* РџРµСЂРµС„РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ РґР»СЏ РёРјРїРѕСЂС‚Р° */
+	/* Переформируем массив для импорта */
 	public function convertArrImport($type = '', $a = array()) {
 		$n 	= array();
 		$p 	= array();
 		$r 	= prReCrmProps::getTypes('arr', $type);
+
 		if(is_array($a) AND count($a) > 0)
 		{
 			if($type == 'estate')
@@ -580,7 +581,7 @@ class prReCrmData
 					*/
 				}
 			}
-			elseif($r == 'contragent')
+			elseif($r == 'contragent' OR $type == 'agentinfo')
 			{
 				foreach($a[$r] AS $a_k => $a_v)
 				{
@@ -615,10 +616,11 @@ class prReCrmData
 				}
 			}
 		}
+
 		return $n;
 	}
 
-	/* РџСЂР°РІРёРј РґР°РЅРЅС‹Рµ */
+	/* Правим данные */
 	public function dataChange($key = '', $val = '')
 	{
 		if(in_array($key, array('creation_date', 'creation_datetime', 'edit_date', 'edit_datetime')))
@@ -678,7 +680,7 @@ class prReCrmData
 		endif;
 	}
 
-	/* РЎРѕР·РґР°РµРј РјР°СЃСЃРёРІ СЃ ID РґР»СЏ РёРјРїРѕСЂС‚Р° */
+	/* Создаем массив с ID для импорта */
 	public function MakeTmpData($arParams = array())
 	{
 		date_default_timezone_set($this->getTZ());
@@ -696,17 +698,17 @@ class prReCrmData
 			'START' 		=> 'N',
 		);
 
-		/* Р’С‹Р±СЂР°РЅРЅС‹Рµ С‚РёРїС‹ РґР»СЏ РёРјРїРѕСЂС‚Р° */
+		/* Выбранные типы для импорта */
 		$TYPES_ARR = array();
 		foreach($this->getSelectTypes() AS $T_V)
 		{
 			$TYPES_ARR [] = $T_V;
 		}
 
-		/* РћР±РЅРѕРІР»СЏРµРј РґР°С‚Сѓ РїРѕСЃР»РµРґРЅРµРіРѕ Р·Р°РїСЂРѕСЃР° Рє CRM РґР»СЏ РїРѕСЃР»РµРґСЋС‰РµРіРѕ РїРѕРёСЃРєР° РѕР±РЅРѕРІР»РµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ */
+		/* Обновляем дату последнего запроса к CRM для последющего поиска обновленных объектов */
 		COption::SetOptionString(self::$module_id, 'pr_recrm_last_load', $UPD_TIME);
 
-		/* РЎРѕР·РґР°РµРј РјР°СЃСЃРёРІ РґР°РЅРЅС‹С… РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° */
+		/* Создаем массив данных для каждого типа */
 		foreach($TYPES_ARR AS $TYPE)
 		{
 			$IBLOCK_ID 	= $this->getIBId($TYPE);
@@ -727,8 +729,8 @@ class prReCrmData
 				$json_type = 'contragentall';
 			}
 
-			/* РР· CRM */
-			/* Р•СЃР»Рё РІС‹РіСЂСѓР¶Р°С‚СЊ РѕР±СЉРµРєС‚С‹ СЃРѕ РІСЃРµРјРё СЃС‚Р°С‚СѓСЃР°РјРё */
+			/* Из CRM */
+			/* Если выгружать объекты со всеми статусами */
 			$ReCrmIDsS1 = array();
 			$ReCrmIDsS2 = array();
 			if($this->getSS() == '1' AND $TYPE == 'estate')
@@ -744,17 +746,17 @@ class prReCrmData
 				$ReCrmIDsS2 	= $this->convertArrCheck($json_type, $json_res_s2);
 			}
 
-			/* Р—Р°РїСЂРѕСЃ */
+			/* Запрос */
 			$json_res 		= $this->getJson($json_type, $json_params);
 			$ReCrmIDs 		= $this->convertArrCheck($json_type, $json_res) + $ReCrmIDsS1 + $ReCrmIDsS2;
 			$ReCrmIDsUpd 	= $ReCrmIDs;
 
-			/* Р”Р»СЏ РёР·РјРµРЅРµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ, РёС‰РµРј С‚РѕР»СЊРєРѕ С‚Рµ, РєРѕС‚РѕСЂС‹Рµ РїРѕР·РґРЅРµРµ РїРѕСЃР»РµРґРЅРµРіРѕ Р·Р°РїСЂРѕСЃР° Рє CRM Р·Р°РЅРµСЃРµРЅРЅС‹С… РІ РѕС‡РµСЂРµРґСЊ РЅР° РІС‹РіСЂСѓР·РєСѓ */
+			/* Для измененных объектов, ищем только те, которые позднее последнего запроса к CRM занесенных в очередь на выгрузку */
 			if($LAST_LOAD > 0 AND $TYPE == 'estate')
 			{
 				$json_params ['date_from'] 	= date('j.m.Y H:i', $LAST_LOAD);
 
-				/* Р•СЃР»Рё РІС‹РіСЂСѓР¶Р°С‚СЊ РѕР±СЉРµРєС‚С‹ СЃРѕ РІСЃРµРјРё СЃС‚Р°С‚СѓСЃР°РјРё */
+				/* Если выгружать объекты со всеми статусами */
 				$ReCrmIDsS1 = array();
 				$ReCrmIDsS2 = array();
 				if($this->getSS() == '1')
@@ -774,17 +776,17 @@ class prReCrmData
 				$ReCrmIDsUpd 	= $this->convertArrCheck($json_type, $json_res_upd) + $ReCrmIDsS1 + $ReCrmIDsS2;
 			}
 
-			/* РћР±СЉРµРєС‚С‹ РёР· Р‘Р” */
+			/* Объекты из БД */
 			$DBArr 	= $this->getEliB($IBLOCK_ID);
 
-			/* РС‰РµРј СЌР»РµРјРµРЅС‚С‹, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ СѓРґР°Р»РёС‚СЊ, РєРѕС‚РѕСЂС‹С… РЅРµС‚ РІ CRM РЅРѕ РµСЃС‚СЊ РІ Р‘Р” */
+			/* Ищем элементы, которые нужно удалить, которых нет в CRM но есть в БД */
 			$DEL 	= array();
-			/* РќР° СЃР»СѓС‡Р°Р№, РµСЃР»Рё СѓРїР°Р»Р° CRM Рё РЅРµ РїРѕР»СѓС‡РµРЅРѕ РЅРё РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° */
+			/* На случай, если упала CRM и не получено ни одного объекта */
 			if(count($ReCrmIDs) > 0)
 			{
 				$DEL = array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
 			}
-			/* Р•СЃР»Рё РЅР° СѓРґР°Р»РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ РјРЅРѕРіРѕ, РЅРµ СѓРґР°Р»СЏС‚СЊ: TODO РёСЃРїСЂР°РІРёС‚СЊ РєРѕСЃС‚С‹Р»СЊ */
+			/* Если на удаление объектов много, не удалять: TODO исправить костыль */
 			$HALF_COUNT = count($DBArr['id_btrx']) / 2;
 			if(count($DEL) >= $HALF_COUNT)
 			{
@@ -795,15 +797,15 @@ class prReCrmData
 				$DEL = array();
 			}
 
-			/* РС‰РµРј СЌР»РµРјРµРЅС‚С‹, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ, РєРѕС‚РѕСЂС‹С… РЅРµС‚ РІ Р‘Р” РЅРѕ РµСЃС‚СЊ РІ CRM */
+			/* Ищем элементы, которые нужно добавить, которых нет в БД но есть в CRM */
 			$NEW 	= array();
 			$NEW 	= array_diff_assoc($ReCrmIDs, $DBArr['id_recrm']);
 
-			/* Р­Р»РµРјРµРЅС‚С‹, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ РѕР±РЅРѕРІРёС‚СЊ, СѓР±РёСЂР°РµРј {СѓРґР°Р»РёС‚СЊ + РЅРѕРІС‹Рµ} РёР· РјР°СЃСЃРёРІР° ID Recrm */
+			/* Элементы, которые нужно обновить, убираем {удалить + новые} из массива ID Recrm */
 			$UPD_U 	= $DEL + $NEW;
 			$UPD 	= $this->unsetArrEl($ReCrmIDsUpd, $UPD_U);
 
-			/* Р—Р°РЅРѕСЃРёРј РІ РјР°СЃСЃРёРІ РґР°РЅРЅС‹С… */
+			/* Заносим в массив данных */
 			$arData['DATA'][$TYPE] = array(
 				'IBLOCK_ID' => $IBLOCK_ID,
 				'NEW' 		=> $this->is_a($NEW, true),
@@ -814,12 +816,12 @@ class prReCrmData
 
 		$FILES_TYPE = $arParams['CRON'] == 'Y' ? 'CRON' : 'SITE';
 
-		/* РћС‚ РґСѓР±Р»РµР№ */
+		/* От дублей */
 		$arHASH = $arData;
 		unset($arHASH['UPDATE_TIME']);
 		$HASH = md5(serialize($arHASH));
 
-		/* РЎРїРёСЃРѕРє С„Р°Р№Р»РѕРІ РІ РѕС‡РµСЂРµРґРё */
+		/* Список файлов в очереди */
 		$FILES = $this->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
 		if (array_key_exists($HASH, $FILES[$FILES_TYPE]))
 		{
@@ -827,19 +829,19 @@ class prReCrmData
 		}
 		else
 		{
-			/* РЎРѕР·РґР°РµРј РІСЂРµРјРµРЅРЅС‹Р№ С„Р°Р№Р» */
+			/* Создаем временный файл */
 			$this->TmpDb(array('TYPE' => 'W', 'FILE' => $FILE_NAME, 'DATA' => $arData));
 
-			/* Р”РѕР±Р°РІР»СЏРµРј РІ СЃРїРёСЃРѕРє РѕС‡РµСЂРµРґРё РЅРѕРІС‹Р№ С„Р°Р№Р» */
+			/* Добавляем в список очереди новый файл */
 			$FILES [$FILES_TYPE][$HASH] = $FILE_NAME;
 			$this->TmpDb(array('TYPE' => 'W', 'FILE' => 'recrm_files', 'DATA' => $FILES));
 
-			/* Р’РѕР·РІСЂР°С‰Р°РµРј РґР°РЅРЅС‹Рµ Р·Р°РЅРµСЃРµРЅРЅС‹Рµ РІ С„Р°Р№Р» */
+			/* Возвращаем данные занесенные в файл */
 			return $arData;
 		}
 	}
 
-	/* РРјРїРѕСЂС‚ */
+	/* Импорт */
 	public function importIBEl($CRON = 0, $START = 'N')
 	{
 		date_default_timezone_set($this->getTZ());
@@ -851,10 +853,11 @@ class prReCrmData
 
 		CModule::IncludeModule("iblock");
 
-		$TYPE 			= array();
+		$TYPE_IDS 		= array();
 		$FILES 			= $this->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
 		$FILES_TYPE 	= $CRON === 'Y' ? 'CRON' : 'SITE';
 		$FILES_COUNT 	= count($FILES[$FILES_TYPE]);
+
 		if(count($FILES_COUNT))
 		{
 			$FILE 	= array_shift($FILES[$FILES_TYPE]);
@@ -871,46 +874,253 @@ class prReCrmData
 				$TYPE_IDS = $this->is_a($TYPE_DATA['NEW']) + $this->is_a($TYPE_DATA['UPD']) + $this->is_a($TYPE_DATA['DEL']);
 				if(count($TYPE_IDS))
 				{
-					$TYPE ['KEY'] 	= $TYPE_KEY;
-					$TYPE ['NAME'] 	= prReCrmProps::getTypes('name', $TYPE_KEY);
-					$TYPE ['DATA'] 	= $TYPE_DATA;
-					$TYPE ['IDS'] 	= $TYPE_IDS;
+					$TYPE_NAME = prReCrmProps::getTypes('name', $TYPE_KEY);
+					$IBLOCK_ID = $TYPE_DATA['IBLOCK_ID'];
 					break;
 				}
 			}
-		}
 
-		if(count($TYPE) == 0)
-		{
-			/* Callback Finish */
-			$rsHandlers = GetModuleEvents(self::$module_id, "OnAfterImport");
-			while($arHandler = $rsHandlers->Fetch())
+			if(count($TYPE_IDS) <= 0)
 			{
-				ExecuteModuleEvent($arHandler);
-			}
-
-			$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILE_FINISH'), $FILE);
-
-			$this->TmpDb(array('TYPE' => 'D', 'FILE' => $FILE));
-			$this->TmpDb(array('TYPE' => 'W', 'FILE' => 'recrm_files', 'DATA' => $FILES));
-			COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', 0);
-
-			if(strlen($DATA['UPDATE_TIME']) > 0)
-				COption::SetOptionString(self::$module_id, 'pr_recrm_last_upd', $DATA['UPDATE_TIME']);
-
-			if(count($FILES[$FILES_TYPE]) == 0) // IMPORTANT
-			{
-				$arLog [] = GetMessage('PR_RECRM_LOG_FILES_NONE');
-				if(defined("PR_RECRM_DEBUG"))
+				/* Callback Finish */
+				$rsHandlers = GetModuleEvents(self::$module_id, "OnAfterImport");
+				while($arHandler = $rsHandlers->Fetch())
 				{
-					AddMessage2Log($arLog);
+					ExecuteModuleEvent($arHandler);
 				}
-				return true;
+
+				$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILE_FINISH'), $FILE);
+
+				$this->TmpDb(array('TYPE' => 'D', 'FILE' => $FILE));
+				$this->TmpDb(array('TYPE' => 'W', 'FILE' => 'recrm_files', 'DATA' => $FILES));
+				COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', 0);
+
+				if(strlen($DATA['UPDATE_TIME']) > 0)
+				{
+					COption::SetOptionString(self::$module_id, 'pr_recrm_last_upd', $DATA['UPDATE_TIME']);
+				}
+
+				if(count($FILES[$FILES_TYPE]) == 0) // IMPORTANT
+				{
+					$arLog [] = GetMessage('PR_RECRM_LOG_FILES_NONE');
+					if(defined("PR_RECRM_DEBUG"))
+					{
+						AddMessage2Log($arLog);
+					}
+					return true;
+				}
+				else
+				{
+					$arLog [] = GetMessage('PR_RECRM_LOG_FILE_NEXT');
+
+					if($CRON === 'Y')
+					{
+						$this->importIBEl('Y'); // если крон - рекурсия
+					}
+					if(defined("PR_RECRM_DEBUG"))
+					{
+						AddMessage2Log($arLog);
+					}
+					return $arLog;
+				}
 			}
 			else
 			{
-				$arLog [] = GetMessage('PR_RECRM_LOG_FILE_NEXT');
-				if($CRON === 'Y') $this->importIBEl('Y'); // РµСЃР»Рё РєСЂРѕРЅ - СЂРµРєСѓСЂСЃРёСЏ
+				$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILES_LAST'), $FILES_COUNT);
+				$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILE_READ'), date('d.m.Y - H:i:s', $DATA['UPDATE_TIME']));
+
+				$COUNT 	= count($TYPE_IDS);
+				$IDS_DB = $this->getEliB($IBLOCK_ID);
+
+				$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILE_START'), $TYPE_NAME, count($TYPE_IDS));
+
+				$STEP = $this->getStepTime(); // Сколько шаг
+				foreach($TYPE_IDS AS $CRM_ID)
+				{
+					if(intval($CRM_ID) == 0) continue;
+
+					/* Выход из цикла по времени */
+					if($CRON !== 'Y')
+					{
+						$LEFT = time() - $this->getStartUpdate();
+
+						if($STEP > 0 AND $LEFT >= $STEP)
+							break;
+					}
+
+					/* ID в Btrx */
+					$DB_ID = $IDS_DB['id_btrx'][$CRM_ID];
+
+					if(in_array($CRM_ID, $DATA['DATA'][$TYPE_KEY]['DEL']))
+					{
+						/*
+						Callback
+							has params TYPE - text, IBLOCK_ID - int, CRM_ID - int, ELEMENT_ID - int
+						*/
+						$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeElementDelete");
+						while($arHandler = $rsHandlers->Fetch())
+						{
+							$forEvent = array(
+								'TYPE' 			=> $TYPE_KEY,
+								'IBLOCK_ID' 	=> $IBLOCK_ID,
+								'CRM_ID' 		=> $CRM_ID,
+								'ELEMENT_ID' 	=> $DB_ID,
+							);
+							$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
+						}
+
+						$EL = new CIBlockElement;
+						$EL->Delete($DB_ID);
+
+						unset($DATA['DATA'][$TYPE_KEY]['DEL'][$CRM_ID]);
+
+						continue;
+					}
+
+					$TITLE 			= '';
+					$DETAIL_TEXT 	= '';
+					$PROP 			= array();
+
+					/* Подробно о элемент из ReCrm */
+					$GET_INFO_TYPE 		= $TYPE_KEY;
+					$GET_INFO_PARAMS 	= array('id' => $CRM_ID);
+					$DATA_CONVERT_TYPE 	= $TYPE_KEY;
+					if($TYPE_KEY == 'agent')
+					{
+						$GET_INFO_TYPE 		= 'agentinfo';
+						$DATA_CONVERT_TYPE 	= 'agentinfo';
+					}
+					elseif($TYPE_KEY == 'estate')
+					{
+						$GET_INFO_PARAMS['description_format'] = '1';
+					}
+					$GET_INFO 			= $this->getJson($GET_INFO_TYPE, $GET_INFO_PARAMS);
+					$DATA_CONVERT 		= $this->convertArrImport($DATA_CONVERT_TYPE, $GET_INFO);
+					$ELEMENT_DATA		= $DATA_CONVERT[$CRM_ID];
+
+					/* Заголовки */
+					if(is_array($ELEMENT_DATA['title']))
+					{
+						$TITLE = $ELEMENT_DATA['title']['value'];
+						unset($ELEMENT_DATA['title']);
+					}
+					elseif(is_array($ELEMENT_DATA['name']))
+					{
+						$TITLE = $ELEMENT_DATA['name']['value'];
+						unset($ELEMENT_DATA['name']);
+					}
+
+					if(strlen($TITLE) <= 0) $TITLE = $CRM_ID;
+
+					/* Описание */
+					if(is_array($ELEMENT_DATA['description']))
+					{
+						$DETAIL_TEXT = nl2br(str_replace($this->getDescStr(), '', $ELEMENT_DATA['description']['value']));
+						unset($ELEMENT_DATA['description']);
+					}
+
+					foreach($ELEMENT_DATA AS $PROP_K => $PROP_V)
+					{
+						$PROP[$PROP_K] = $this->dataChange($PROP_K, $PROP_V['value']);
+					}
+
+					/* Изображения */
+					if($TYPE_KEY == 'agent')
+					{
+						$PROP['photo'] = $this->convertArrImport('agentphoto',$this->getJson('agentphoto', array('agent_id' => $CRM_ID, 'width' => '500', 'height' => '500', 'crop' => '0')));
+					}
+					elseif($TYPE_KEY == 'estate')
+					{
+						$getCoverSize = $this->getCoverSize();
+						$PROP['estatecoverphoto'] 	= $this->convertArrImport('estatecoverphoto',$this->getJson('estatecoverphoto', array('estate_id' => $CRM_ID, 'width' => $getCoverSize['width'], 'height' => $getCoverSize['height'], 'crop' => $this->getCrop(), 'watermark' => $this->getWRK())));
+						$PROP['estatephoto'] 		= $this->convertArrImport('estatephoto',$this->getJson('estatephoto', array('estate_id' => $CRM_ID, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
+						$PROP['estatephotolayout'] 	= $this->convertArrImport('estatephotolayout',$this->getJson('estatephotolayout', array('estate_id' => $CRM_ID, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
+						if($PROP['edit_date'] == '') 		$PROP['edit_date'] 		= $PROP['creation_date'];
+						if($PROP['edit_datetime'] == '') 	$PROP['edit_datetime'] 	= $PROP['creation_datetime'];
+					}
+
+					/* Добавляем свойства которых нет */
+					$this->checkIBProps($TYPE_KEY, $ELEMENT_DATA);
+
+					$CODE = CUtil::translit($TITLE.'_'.$CRM_ID, "ru" , array(
+						"max_len" 				=> "100",
+						"change_case" 			=> "L",
+						"replace_space" 		=> "_",
+						"replace_other" 		=> "_",
+						"delete_repeat_replace" => "true",
+						"use_google" 			=> "false",
+					));
+
+					$arEL = array(
+						"MODIFIED_BY" 		=> $GLOBALS['USER']->GetID(),
+						"IBLOCK_ID" 		=> $IBLOCK_ID,
+						"NAME" 				=> $TITLE,
+						"CODE" 				=> $CODE,
+						"DETAIL_TEXT" 		=> $DETAIL_TEXT,
+						"DETAIL_TEXT_TYPE" 	=> 'html',
+					);
+
+					/*
+					Callback
+						has params TYPE - text, NEW - bool, PARAMS - arr, PROP - arr
+						should return the array('PARAMS' => $arEL, 'PROPS' => $PROP);
+					*/
+					$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeImport");
+					while($arHandler = $rsHandlers->Fetch())
+					{
+						$forEvent = array(
+							'TYPE' 		=> $TYPE_KEY,
+							'NEW' 		=> in_array($CRM_ID, $DATA['DATA'][$TYPE_KEY]['NEW']),
+							'PARAMS' 	=> $arEL,
+							'PROP' 		=> $PROP,
+						);
+						$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
+						$arEL = $resEvent['PARAMS'];
+						$PROP = $resEvent['PROP'];
+					}
+
+					/* Element */
+					$EL = new CIBlockElement;
+
+					if(in_array($CRM_ID, $DATA['DATA'][$TYPE_KEY]['UPD']) OR $DB_ID > 0)
+					{
+						$EL->Update($DB_ID, $arEL);
+
+						foreach($PROP AS $PROP_K => $PROP_V)
+						{
+							CIBlockElement::SetPropertyValues($DB_ID, $IBLOCK_ID, $PROP_V, $PROP_K);
+						}
+						unset($DATA['DATA'][$TYPE_KEY]['UPD'][$CRM_ID]);
+						unset($DATA['DATA'][$TYPE_KEY]['NEW'][$CRM_ID]);
+					}
+					elseif(in_array($CRM_ID, $DATA['DATA'][$TYPE_KEY]['NEW']))
+					{
+						$arEL["PROPERTY_VALUES"] = $PROP;
+						$EL->Add($arEL);
+						unset($DATA['DATA'][$TYPE_KEY]['NEW'][$CRM_ID]);
+					}
+
+					$COUNT--;
+
+					if($EL->LAST_ERROR) $arLog [] = sprintf(GetMessage('PR_RECRM_LOG_EL_ERROR'), $TYPE_NAME, $EL->LAST_ERROR);
+				}
+
+				if($CRON !== 'Y')
+				{
+					$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_STEP_LEFT'), $LEFT, $STEP);
+					$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_STEP_BREAK'), $TYPE_NAME, $COUNT);
+				}
+
+				$arLog [] = GetMessage('PR_RECRM_LOG_CONTINUE');
+
+				COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', time());
+
+				$this->TmpDb(array('TYPE' => 'W', 'FILE' => $FILE, 'DATA' => $DATA));
+
+				if($CRON === 'Y')
+				{
+					$this->importIBEl('Y'); // если крон - рекурсия
+				}
 				if(defined("PR_RECRM_DEBUG"))
 				{
 					AddMessage2Log($arLog);
@@ -918,196 +1128,6 @@ class prReCrmData
 				return $arLog;
 			}
 		}
-		else
-		{
-			$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILES_LAST'), $FILES_COUNT);
-			$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILE_READ'), date('d.m.Y - H:i:s', $DATA['UPDATE_TIME']));
-			$COUNT 	= count($TYPE['IDS']);
-
-			$IBLOCK_ID 		= $TYPE['DATA']['IBLOCK_ID'];
-			$IDS_DB 		= $this->getEliB($IBLOCK_ID);
-
-			$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_FILE_START'), $TYPE['NAME'], count($TYPE['IDS']));
-
-			$STEP = $this->getStepTime(); // РЎРєРѕР»СЊРєРѕ С€Р°Рі
-			foreach($TYPE['IDS'] AS $CRM_ID)
-			{
-				if(intval($CRM_ID) == 0) continue;
-
-				/* Р’С‹С…РѕРґ РёР· С†РёРєР»Р° РїРѕ РІСЂРµРјРµРЅРё */
-				$LEFT = time() - $this->getStartUpdate();
-				if($CRON !== 'Y')
-				{
-					if($STEP > 0 AND $LEFT >= $STEP) break;
-				}
-
-				/* ID РІ Btrx */
-				$DB_ID = $IDS_DB['id_btrx'][$CRM_ID];
-
-				if(in_array($CRM_ID, $TYPE['DATA']['DEL']))
-				{
-					/*
-					Callback
-						has params TYPE - text, IBLOCK_ID - int, CRM_ID - int, ELEMENT_ID - int
-					*/
-					$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeElementDelete");
-					while($arHandler = $rsHandlers->Fetch())
-					{
-						$forEvent = array(
-							'TYPE' 			=> $TYPE['KEY'],
-							'IBLOCK_ID' 	=> $IBLOCK_ID,
-							'CRM_ID' 		=> $CRM_ID,
-							'ELEMENT_ID' 	=> $DB_ID,
-						);
-						$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
-					}
-
-					$EL = new CIBlockElement;
-					$EL->Delete($DB_ID);
-
-					unset($TYPE['DATA']['DEL'][$CRM_ID]);
-
-					continue;
-				}
-
-				$TITLE 			= '';
-				$DETAIL_TEXT 	= '';
-				$PROP 			= array();
-
-				/* РџРѕРґСЂРѕР±РЅРѕ Рѕ СЌР»РµРјРµРЅС‚ РёР· ReCrm */
-				$GET_INFO 			= $this->getJson($TYPE['KEY'], array('id' => $CRM_ID, 'description_format' => '1'));
-				$DATA_CONVERT 		= $this->convertArrImport($TYPE['KEY'], $GET_INFO);
-				$ELEMENT_DATA		= $DATA_CONVERT[$CRM_ID];
-
-				/* Р—Р°РіРѕР»РѕРІРєРё */
-				if(is_array($ELEMENT_DATA['title']))
-				{
-					$TITLE = $ELEMENT_DATA['title']['value'];
-					unset($ELEMENT_DATA['title']);
-				}
-				elseif(is_array($ELEMENT_DATA['name']))
-				{
-					$TITLE = $ELEMENT_DATA['name']['value'];
-					unset($ELEMENT_DATA['name']);
-				}
-
-				if(strlen($TITLE) <= 0) $TITLE = $CRM_ID;
-
-				/* РћРїРёСЃР°РЅРёРµ */
-				if(is_array($ELEMENT_DATA['description']))
-				{
-					$DETAIL_TEXT = nl2br(str_replace($this->getDescStr(), '', $ELEMENT_DATA['description']['value']));
-					unset($ELEMENT_DATA['description']);
-				}
-
-				foreach($ELEMENT_DATA AS $PROP_K => $PROP_V)
-				{
-					$PROP[$PROP_K] = $this->dataChange($PROP_K, $PROP_V['value']);
-				}
-
-				/* РР·РѕР±СЂР°Р¶РµРЅРёСЏ */
-				if($TYPE['KEY'] == 'agent')
-				{
-					$PROP['photo'] = $this->convertArrImport('agentphoto',$this->getJson('agentphoto', array('agent_id' => $CRM_ID, 'width' => '500', 'height' => '500', 'crop' => '0')));
-				}
-				elseif($TYPE['KEY'] == 'estate')
-				{
-					$getCoverSize = $this->getCoverSize();
-					$PROP['estatecoverphoto'] 	= $this->convertArrImport('estatecoverphoto',$this->getJson('estatecoverphoto', array('estate_id' => $CRM_ID, 'width' => $getCoverSize['width'], 'height' => $getCoverSize['height'], 'crop' => $this->getCrop(), 'watermark' => $this->getWRK())));
-					$PROP['estatephoto'] 		= $this->convertArrImport('estatephoto',$this->getJson('estatephoto', array('estate_id' => $CRM_ID, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
-					$PROP['estatephotolayout'] 	= $this->convertArrImport('estatephotolayout',$this->getJson('estatephotolayout', array('estate_id' => $CRM_ID, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
-					if($PROP['edit_date'] == '') 		$PROP['edit_date'] 		= $PROP['creation_date'];
-					if($PROP['edit_datetime'] == '') 	$PROP['edit_datetime'] 	= $PROP['creation_datetime'];
-				}
-
-				/* Р”РѕР±Р°РІР»СЏРµРј СЃРІРѕР№СЃС‚РІР° РєРѕС‚РѕСЂС‹С… РЅРµС‚ */
-				$this->checkIBProps($TYPE['KEY'], $ELEMENT_DATA);
-
-				$CODE = CUtil::translit($TITLE.'_'.$CRM_ID, "ru" , array(
-					"max_len" 				=> "100",
-					"change_case" 			=> "L",
-					"replace_space" 		=> "_",
-					"replace_other" 		=> "_",
-					"delete_repeat_replace" => "true",
-					"use_google" 			=> "false",
-				));
-
-				$arEL = array(
-					"MODIFIED_BY" 		=> $GLOBALS['USER']->GetID(),
-					"IBLOCK_ID" 		=> $IBLOCK_ID,
-					"NAME" 				=> $TITLE,
-					"CODE" 				=> $CODE,
-					"DETAIL_TEXT" 		=> $DETAIL_TEXT,
-					"DETAIL_TEXT_TYPE" 	=> 'html',
-				);
-
-				/*
-				Callback
-					has params TYPE - text, NEW - bool, PARAMS - arr, PROP - arr
-					should return the array('PARAMS' => $arEL, 'PROPS' => $PROP);
-				*/
-				$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeImport");
-				while($arHandler = $rsHandlers->Fetch())
-				{
-					$forEvent = array(
-						'TYPE' 		=> $TYPE['KEY'],
-						'NEW' 		=> in_array($CRM_ID, $TYPE['DATA']['NEW']),
-						'PARAMS' 	=> $arEL,
-						'PROP' 		=> $PROP,
-					);
-					$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
-					$arEL = $resEvent['PARAMS'];
-					$PROP = $resEvent['PROP'];
-				}
-
-				/* Element */
-				$EL = new CIBlockElement;
-
-				if(in_array($CRM_ID, $TYPE['DATA']['UPD']) OR $DB_ID > 0)
-				{
-					$EL->Update($DB_ID, $arEL);
-
-					foreach($PROP AS $PROP_K => $PROP_V)
-					{
-						CIBlockElement::SetPropertyValues($DB_ID, $IBLOCK_ID, $PROP_V, $PROP_K);
-					}
-
-					unset($TYPE['DATA']['UPD'][$CRM_ID]);
-					unset($TYPE['DATA']['NEW'][$CRM_ID]);
-				}
-				elseif(in_array($CRM_ID, $TYPE['DATA']['NEW']))
-				{
-					$arEL["PROPERTY_VALUES"] = $PROP;
-					$EL->Add($arEL);
-					unset($TYPE['DATA']['NEW'][$CRM_ID]);
-				}
-
-				$COUNT--;
-
-				if($EL->LAST_ERROR) $arLog [] = sprintf(GetMessage('PR_RECRM_LOG_EL_ERROR'), $TYPE['NAME'], $EL->LAST_ERROR);
-			}
-
-			if($CRON !== 'Y')
-			{
-				$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_STEP_LEFT'), $LEFT, $STEP);
-				$arLog [] = sprintf(GetMessage('PR_RECRM_LOG_STEP_BREAK'), $TYPE['NAME'], $COUNT);
-			}
-
-			$arLog [] = GetMessage('PR_RECRM_LOG_CONTINUE');
-
-			COption::SetOptionString(self::$module_id, 'pr_recrm_start_upd', time());
-
-			$DATA['DATA'][$TYPE['KEY']] = $TYPE['DATA'];
-			$this->TmpDb(array('TYPE' => 'W', 'FILE' => $FILE, 'DATA' => $DATA));
-
-			if($CRON === 'Y') $this->importIBEl('Y'); // РµСЃР»Рё РєСЂРѕРЅ - СЂРµРєСѓСЂСЃРёСЏ
-			if(defined("PR_RECRM_DEBUG"))
-			{
-				AddMessage2Log($arLog);
-			}
-			return $arLog;
-		}
-
 	}
 
 	/* ReCRM Redirect */

@@ -101,13 +101,13 @@ if($REQUEST_METHOD=="POST" AND strlen($Update.$Apply.$RestoreDefaults) > 0 AND $
 			}
 			COption::SetOptionString($module_id, $name, $val, $arOption[1]);
 		}
-		
+
 		if(count($_REQUEST['IB_P_NAME'] > 0))
 		{
 			$IB_P_NAME = $_REQUEST['IB_P_NAME'];
 			$IB_P_HINT = $_REQUEST['IB_P_HINT'];
 			$IB_P_SORT = $_REQUEST['IB_P_SORT'];
-			
+
 			foreach($IB_P_NAME AS $IB_P_K => $IB_P_V)
 			{
 				$iBp = new CIBlockProperty;
@@ -116,15 +116,15 @@ if($REQUEST_METHOD=="POST" AND strlen($Update.$Apply.$RestoreDefaults) > 0 AND $
 					"HINT" => $IB_P_HINT[$IB_P_K],
 					"SORT" => $IB_P_SORT[$IB_P_K],
 				));
-			}			
+			}
 		}
 	}
-	
+
 	ob_start();
 	$Update = $Update.$Apply;
 	require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/admin/group_rights.php");
 	ob_end_clean();
-	
+
 	if(strlen($_REQUEST["back_url_settings"]) > 0)
 	{
 		if((strlen($Apply) > 0) OR (strlen($RestoreDefaults) > 0))
@@ -145,28 +145,28 @@ if($REQUEST_METHOD=="POST" AND strlen($Update.$Apply.$RestoreDefaults) > 0 AND $
 if($RIGHT=="W")
 {
 
-	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… Ñ‚Ð¸Ð¿Ð¾Ð² */
+	/* Ïðîâåðêà âûáðàííûõ òèïîâ */
 	if(count($SELECT_T) == 0)
 	{
 		$ERROR = array('PROGRESS' => '10', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_SELECT_TYPES"));
 	}
-	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ¾Ð²*/
+	/* Ïðîâåðêà èíôîáëîêîâ*/
 	elseif(count($CHECK_IB) > 0)
 	{
 		$ERROR = array('PROGRESS' => '30', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_IB_TYPES") . ": " . implode(',',$CHECK_IB));
 	}
-	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÐºÐ»ÑŽÑ‡Ð° Ð´Ð»Ñ ReCrm */
+	/* Ïðîâåðêà êëþ÷à äëÿ ReCrm */
 	elseif($GET_KEY == '')
 	{
 		$ERROR = array('PROGRESS' => '60', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_FOUND_KEY"));
 	}
-	/* ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ð¾Ð³Ð¾ ÐºÐ»ÑŽÑ‡Ð° Ð´Ð»Ñ ReCrm */
+	/* Ïðîâåðêà óêàçàííîãî êëþ÷à äëÿ ReCrm */
 	elseif($CHECK_KEY === false)
 	{
 		$ERROR = array('PROGRESS' => '95', 'MESSAGE' => GetMessage("PR_RECRM_ERR_BAD_KEY"));
 	}
-	
-	/* ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ð¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¸Ð· ReCrm */
+
+	/* Ïîëó÷èì äàííûå èç ReCrm */
 	if($ACTION == 'MakeTmpData' AND count($ERROR) == 0 AND !defined("PR_RECRM_CLOSE"))
 	{
 		$MakeTmpData = $RECRM->MakeTmpData();
@@ -180,11 +180,11 @@ if($RIGHT=="W")
 		}
 	}
 
-	/* Ð˜Ð¼Ð¿Ð¾Ñ€Ñ‚ Ð¸Ð· Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ñ… Ñ„Ð°Ð¹Ð»Ð¾Ð² */
+	/* Èìïîðò èç âðåìåííûõ ôàéëîâ */
 	if($ACTION == 'ImportStart' AND count($ERROR) == 0 AND !defined("PR_RECRM_CLOSE"))
 	{
 		$STATUS = $RECRM->importIBEl(0, $_GET['start']);
-		
+
 		if(is_array($STATUS))
 		{
 			$NOTE ['TRUE'] = $STATUS;
@@ -206,7 +206,7 @@ if($RIGHT=="W")
 		}
 	}
 
-	/* Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð° */
+	/* Óäàëåíèå âðåìåííîãî ôàéëà */
 	if($ACTION == 'tmpDbDelete' AND count($ERROR) == 0)
 	{
 		$TMP_DB_HASH = $_GET['tmpDbHash'];
@@ -233,7 +233,7 @@ $tabControl->Begin();
 /* Tab Index */
 $tabControl->BeginNextTab();
 
-	if(count($ERROR) > 0) /* ÐžÑˆÐ¸Ð±ÐºÐ¸ */
+	if(count($ERROR) > 0) /* Îøèáêè */
 	{
 		echo CAdminMessage::ShowMessage(array(
 			"MESSAGE" 			=> $ERROR['MESSAGE'],
@@ -248,11 +248,11 @@ $tabControl->BeginNextTab();
 	{
 		if(count($NOTE['TRUE']) > 0)
 			echo CAdminMessage::ShowNote(implode("\r\n", $NOTE['TRUE']));
-		
+
 		if(count($NOTE['FALSE']))
 			echo CAdminMessage::ShowMessage(implode("\r\n", $NOTE['FALSE']));
-		
-		
+
+
 		if(is_array($STATUS)) /* Step Msg */
 		{
 			echo '<br><div class="pr_loader"></div>';
@@ -299,9 +299,9 @@ $tabControl->BeginNextTab();
 			foreach($FILES['SITE'] AS $FILE_HASH => $FILE)
 			{
 				$FILE_DATA = $RECRM->TmpDb(array('TYPE' => 'R', 'FILE' => $FILE));
-				
+
 				echo sprintf(GetMessage('PR_RECRM_STAT_TMP_INFO'), $i).' '.(($FILE_DATA['UPDATE_TIME'] == 0) ? GetMessage('PR_RECRM_STAT_FIRST_IMPORT') : date('d.m.Y - H:i:s', $FILE_DATA['UPDATE_TIME'])).' <a href="'.$CUR_MOD_PAGE.'&action=tmpDbDelete&tmpDbType=SITE&tmpDbHash='.$FILE_HASH.'#sc" onclick="return confirm(\''.GetMessage('PR_RECRM_SURE').'\')">['.GetMessage('PR_RECRM_DELETE').']</a><br><br>';
-				
+
 				foreach($FILE_DATA['DATA'] AS $TYPE => $ELEMENTS)
 				{
 					echo sprintf(GetMessage('PR_RECRM_STAT_TMP_ELEMENTS'), $TYPES[$TYPE], $SELECT_IB[$ELEMENTS['IBLOCK_ID']], count($ELEMENTS['NEW']), count($ELEMENTS['UPD']), count($ELEMENTS['DEL'])).'<br><br>';
@@ -342,7 +342,7 @@ $tabControl->BeginNextTab();
 
 /* Tab Setting */
 $tabControl->BeginNextTab();
-	
+
 	if(defined("PR_RECRM_CLOSE_OPTIONS"))
 	{
 		echo '
@@ -438,7 +438,7 @@ $tabControl->BeginNextTab();
 	<?
 	}
 	?>
-	
+
 <?
 /* Tab Properties */
 $tabControl->BeginNextTab();
@@ -512,6 +512,6 @@ $tabControl->BeginNextTab();
 		}
 		echo EndNote();
 	}
-	
+
 endif;
 ?>

@@ -2,7 +2,7 @@
 
 	/* Map */
 	$.fn.recrm_map = function (data) {
-		
+
 		if($.isEmptyObject(data))
 		{
 			$(this).hide();
@@ -27,7 +27,7 @@
 				var ReCrmObjDom = '';
 				$.each(data, function(i, o)
 				{
-					ReCrmObjDom = $('#recrm_el_' + o['ID'] + ' .title');  // РјРµРЅСЏР№ РЅР° СЃРІРѕРµ
+					ReCrmObjDom = $('#recrm_el_' + o['ID'] + ' .title');  // меняй на свое
 
 					ReCrmGeoObjects[i] = new ymaps.GeoObject(
 					{
@@ -44,7 +44,7 @@
 						}
 					}
 					);
-					
+
 				});
 				var ReCrmClusterer = new ymaps.Clusterer(); // {clusterDisableClickZoom: true}
 				ReCrmClusterer.add(ReCrmGeoObjects);

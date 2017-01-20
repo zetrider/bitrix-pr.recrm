@@ -25,7 +25,7 @@ Class pr_recrm extends CModule
 		$path = str_replace("\\", "/", __FILE__);
 		$path = substr($path, 0, strlen($path)-strlen("/index.php"));
 		$arModuleVersion = array();
-		
+
 		include($path."/version.php");
 
 		if (is_array($arModuleVersion) AND array_key_exists("VERSION", $arModuleVersion))
@@ -55,7 +55,7 @@ Class pr_recrm extends CModule
 		DeleteDirFilesEx("/bitrix/components/pr/recrm.list");
 
 		COption::RemoveOption($this->MODULE_ID);
-		
+
 		return true;
 	}
 

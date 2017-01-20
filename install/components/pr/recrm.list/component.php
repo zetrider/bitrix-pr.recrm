@@ -89,7 +89,7 @@ if($arParams["LIST_MAP_BIG"] == "Y"):
 		$arParams["LIST_PROPS"][] = "zoom";
 		$ADD_PROPS_COMP[] = 'zoom';
 	endif;
-	
+
 	if(!in_array("latitude", $arParams["LIST_PROPS"])):
 		$arParams["LIST_PROPS"][] = "latitude";
 		$ADD_PROPS_COMP[] = 'latitude';
@@ -216,8 +216,8 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 		);
 
 		$arFilter = array(
-			"IBLOCK_ID" 		=> $arParams["IBLOCK_ID"], 
-			"IBLOCK_TYPE" 		=> $arParams["IBLOCK_TYPE"], 
+			"IBLOCK_ID" 		=> $arParams["IBLOCK_ID"],
+			"IBLOCK_TYPE" 		=> $arParams["IBLOCK_TYPE"],
 			"IBLOCK_LID" 		=> SITE_ID,
 			"ACTIVE" 			=> "Y",
 			"CHECK_PERMISSIONS" => "Y",
@@ -240,14 +240,14 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 		endif;
 		*/
 		$rsElement = CIBlockElement::GetList($arOrder, array_merge($arFilter, $arrFilter), false, $arNavParams, $arSelect);
-		$rsElement->SetUrlTemplates($arParams["DETAIL_URL"], "", $arParams["IBLOCK_URL"]);		
+		$rsElement->SetUrlTemplates($arParams["DETAIL_URL"], "", $arParams["IBLOCK_URL"]);
 		while($obElement = $rsElement->GetNextElement())
 		{
 			$arItem 	= $obElement->GetFields();
 			$arProps 	= $obElement->GetProperties(array("SORT"=>"ASC")); //, $arFilterProps);
-			
+
 			$arItem["PROPERTIES"] = $arProps;
-			
+
 			$arButtons = CIBlock::GetPanelButtons(
 				$arItem["IBLOCK_ID"],
 				$arItem["ID"],
@@ -299,22 +299,22 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 			foreach($arProps AS $prop)
 			{
 				if(in_array($prop['CODE'], $arParams["LIST_PROPS"])):
-					
+
 					if($arParams["LIST_PROPS_EMPTY"] != "Y" AND $prop['VALUE'] == '')
 						continue;
 
-					/* РџСЂРµРѕР±СЂР°Р·СѓРµРј РґР°РЅРЅС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ */
+					/* Преобразуем данные для отображения */
 
 					/* boll */
 					if($prop['VALUE'] === 'true')
-						$prop['VALUE'] = 'Р”Р°';
+						$prop['VALUE'] = 'Да';
 					if($prop['VALUE'] === 'false')
-						$prop['VALUE'] = 'РќРµС‚';
-					
+						$prop['VALUE'] = 'Нет';
+
 					/* arr */
 					if(is_array($prop['VALUE']))
 						$prop['VALUE'] = implode('<br>', $prop['VALUE']);
-					
+
 					/* date */
 					if(in_array($prop['CODE'], array('creation_date', 'edit_date')))
 						$prop['VALUE'] = date(GetMessage("PR_RECRM_C_DATE"), $prop['VALUE']);
@@ -326,9 +326,9 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 					$arItem['PROPERTIES_RECRM'][$prop['CODE']] = $prop;
 				endif;
 			}
-			
+
 			$arResult["ITEMS"][] 	= $arItem;
-			$arResult["ELEMENTS"][] = $arItem["ID"];		
+			$arResult["ELEMENTS"][] = $arItem["ID"];
 		}
 
 		$arResult["NAV_STRING"] 		= $rsElement->GetPageNavStringEx($navComponentObject, $arParams["PAGER_TITLE"], $arParams["PAGER_TEMPLATE"], $arParams["PAGER_SHOW_ALWAYS"]);

@@ -1,5 +1,5 @@
 <?
-$MESS ['PR_NAME'] 					= "ÐŸÑ€Ð°Ð¹Ð¼Ð’ÐµÐ±";
-$MESS ['PR_RECRM_C_DETAIL_NAME'] 	= "ÐžÐ±ÑŠÐµÐºÑ‚ Ð´ÐµÑ‚Ð°Ð»ÑŒÐ½Ð¾";
-$MESS ['PR_RECRM_C_DETAIL_DESC'] 	= "Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÑ‚ Ð´ÐµÑ‚Ð°Ð»ÑŒÐ½ÑƒÑŽ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ";
+$MESS ['PR_NAME'] 					= "ÏðàéìÂåá";
+$MESS ['PR_RECRM_C_DETAIL_NAME'] 	= "Îáúåêò äåòàëüíî";
+$MESS ['PR_RECRM_C_DETAIL_DESC'] 	= "îòîáðàæàåò äåòàëüíóþ èíôîðìàöèþ";
 ?>

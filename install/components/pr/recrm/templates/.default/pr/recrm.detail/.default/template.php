@@ -16,7 +16,7 @@ $this->setFrameMode(true);
 
 <div class="recrm_detail">
 	<div class="item">
-		
+
 		<?if($arParams["TEMPLATES_COL"]):?>
 		<div class="col_l">
 
@@ -68,7 +68,7 @@ $this->setFrameMode(true);
 			<?endif?>
 
 		</div>
-		
+
 		<div class="col_r" style="width: calc(98% - 250px);">
 		<?endif?>
 
@@ -99,7 +99,7 @@ $this->setFrameMode(true);
 			<?if($arParams['DETAIL_TEXT'] == "Y"):?>
 				<div class="desc"><?=$arResult['DETAIL_TEXT']?></div>
 			<?endif?>
-		
+
 		<?if($arParams["TEMPLATES_COL"]):?>
 		</div>
 		<?endif?>

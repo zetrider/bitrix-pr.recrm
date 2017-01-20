@@ -66,7 +66,7 @@ if($arParams["DETAIL_PHOTOS"] == "Y"):
 		$arParams["DETAIL_PROPS"][] = "estatephoto";
 		$ADD_PROPS_COMP[] = 'estatephoto';
 	endif;
-	
+
 	if(!in_array("estatephotolayout", $arParams["DETAIL_PROPS"])):
 		$arParams["DETAIL_PROPS"][] = "estatephotolayout";
 		$ADD_PROPS_COMP[] = 'estatephotolayout';
@@ -79,7 +79,7 @@ if($arParams["DETAIL_MAP"] == "Y"):
 		$arParams["DETAIL_PROPS"][] = "zoom";
 		$ADD_PROPS_COMP[] = 'zoom';
 	endif;
-	
+
 	if(!in_array("latitude", $arParams["DETAIL_PROPS"])):
 		$arParams["DETAIL_PROPS"][] = "latitude";
 		$ADD_PROPS_COMP[] = 'latitude';
@@ -208,7 +208,7 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 			$arFilter
 		);
 	endif;
-	
+
 	$arFilter["ID"] = $arParams["ELEMENT_ID"];
 
 	$WF_SHOW_HISTORY = "N";
@@ -243,7 +243,7 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 		"LIST_PAGE_URL",
 		"DETAIL_PAGE_URL",
 	);
-	
+
 	/*
 	if($arParams["DETAIL_PROPS_EMPTY"] == "Y"):
 		$arFilterProps = array();
@@ -264,7 +264,7 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 		if($arParams["DETAIL_PHOTOS"] == "Y"):
 			if(!is_array($arProps['estatephoto']['VALUE']))
 				$arProps['estatephoto']['VALUE'] = array();
-			
+
 			if(!is_array($arProps['estatephotolayout']['VALUE']))
 				$arProps['estatephotolayout']['VALUE'] = array();
 
@@ -273,7 +273,7 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 
 		/* Map */
 		$arItem["MAP"] = array();
-		if($arParams["DETAIL_MAP"] == "Y"):			
+		if($arParams["DETAIL_MAP"] == "Y"):
 			if(intval($arProps['longitude']['VALUE']) > 0):
 				$arItem["MAP"][] = array(
 					'ID' 	=> $arItem['ID'],
@@ -290,22 +290,22 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 				$arItem['VIDEO_URL'] = 'http://www.youtube.com/embed/'.$youtube_match[1].'?enablejsapi=1&wmode=opaque';
 			endif;
 		endif;
-		
+
 		/* Agent */
 		$arItem['AGENT'] = false;
 		if($arParams["DETAIL_AGENT"] == "Y"):
 			if(intval($arProps['agent_id']['VALUE']) > 0):
 
 				$agentRes = CIBlockElement::GetList(
-					array(), 
+					array(),
 					array(
 						"IBLOCK_ID" 	=> $RECRM->getIBId('agent'),
 						"PROPERTY_id" 	=> intval($arProps['agent_id']['VALUE'])
-					), 
-					false, 
-					false, 
+					),
+					false,
+					false,
 					array(
-						"ID", 
+						"ID",
 						"NAME",
 						"PROPERTY_email",
 						"PROPERTY_mobile_phone",
@@ -324,8 +324,8 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 				}
 			endif;
 		endif;
-		
-		
+
+
 		/* Remove Prop for Data*/
 		$arPropsRe = $arProps;
 		if(count($ADD_PROPS_COMP) > 0):
@@ -339,22 +339,22 @@ if($arParams["SHOW_WORKFLOW"] || $this->StartResultCache(false, array(($arParams
 		foreach($arPropsRe AS $prop)
 		{
 			if(in_array($prop['CODE'], $arParams["DETAIL_PROPS"])):
-				
+
 				if($arParams["DETAIL_PROPS_EMPTY"] != "Y" AND $prop['VALUE'] == '')
 					continue;
-				
-				/* РџСЂРµРѕР±СЂР°Р·СѓРµРј РґР°РЅРЅС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ */
+
+				/* Преобразуем данные для отображения */
 
 				/* boll */
 				if($prop['VALUE'] === 'true')
-					$prop['VALUE'] = 'Р”Р°';
+					$prop['VALUE'] = 'Да';
 				if($prop['VALUE'] === 'false')
-					$prop['VALUE'] = 'РќРµС‚';
-				
+					$prop['VALUE'] = 'Нет';
+
 				/* arr */
 				if(is_array($prop['VALUE']))
 					$prop['VALUE'] = implode('<br>', $prop['VALUE']);
-				
+
 				/* date */
 				if(in_array($prop['CODE'], array('creation_date', 'edit_date')))
 					$prop['VALUE'] = date(GetMessage("PR_RECRM_C_DATE"), $prop['VALUE']);

@@ -11,7 +11,7 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 
-/** .item #recrm_el_{id} Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼ Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ ÐºÐ°Ñ€Ñ‚Ñ‹ */
+/** .item #recrm_el_{id} íåîáõîäèì äëÿ ðàáîòû êàðòû */
 
 $this->setFrameMode(true);
 ?>
@@ -31,7 +31,7 @@ $this->setFrameMode(true);
 	<?if($arParams["DISPLAY_TOP_PAGER"]):?>
 		<?=$arResult["NAV_STRING"]?><br />
 	<?endif;?>
-	
+
 	<div class="items">
 		<?foreach($arResult["ITEMS"] as $arItem):?>
 		<?

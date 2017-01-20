@@ -1,3 +1,3 @@
 <?
-$MESS ['PR_RECRM_UNSTEP'] = "ÐœÐ¾Ð´ÑƒÐ»ÑŒ ÑƒÐ´Ð°Ð»ÐµÐ½."; 
+$MESS ['PR_RECRM_UNSTEP'] = "Ìîäóëü óäàëåí.";
 ?>
