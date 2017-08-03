@@ -45,6 +45,8 @@ $arAllOptions [] = array("pr_recrm_key",			GetMessage("PR_RECRM_F_KEY"),			array
 $arAllOptions [] = array("pr_recrm_s_step",			GetMessage("PR_RECRM_F_S_STEP"),		array("text"), 							GetMessage("PR_RECRM_F_S_STEP_NOTE"));
 $arAllOptions [] = array("pr_recrm_img_w",			GetMessage("PR_RECRM_F_IMG_W"),			array("text"), 							GetMessage("PR_RECRM_F_IMG_W_NOTE"));
 $arAllOptions [] = array("pr_recrm_img_h",			GetMessage("PR_RECRM_F_IMG_H"),			array("text"), 							GetMessage("PR_RECRM_F_IMG_H_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_estate_w",	GetMessage("PR_RECRM_F_IMG_ESTATE_W"),	array("text"), 							GetMessage("PR_RECRM_F_IMG_ESTATE_W_NOTE"));
+$arAllOptions [] = array("pr_recrm_img_estate_h",	GetMessage("PR_RECRM_F_IMG_ESTATE_H"),	array("text"), 							GetMessage("PR_RECRM_F_IMG_ESTATE_H_NOTE"));	
 $arAllOptions [] = array("pr_recrm_img_crop",		GetMessage("PR_RECRM_F_IMG_CROP"),		array("selectbox",$arCROP), 			GetMessage("PR_RECRM_F_IMG_CROP_NOTE"));
 $arAllOptions [] = array("pr_recrm_img_wrk",		GetMessage("PR_RECRM_F_IMG_WRK"),		array("selectbox",$arWRK), 				GetMessage("PR_RECRM_F_IMG_WRK_NOTE"));
 $arAllOptions [] = array("pr_recrm_search_hidden",	GetMessage("PR_RECRM_SEARCH_HIDDEN"),	array("selectbox",$arSH), 				GetMessage("PR_RECRM_SEARCH_HIDDEN_NOTE"));
@@ -145,28 +147,28 @@ if($REQUEST_METHOD=="POST" AND strlen($Update.$Apply.$RestoreDefaults) > 0 AND $
 if($RIGHT=="W")
 {
 
-	/* Проверка выбранных типов */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
 	if(count($SELECT_T) == 0)
 	{
 		$ERROR = array('PROGRESS' => '10', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_SELECT_TYPES"));
 	}
-	/* Проверка инфоблоков*/
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 	elseif(count($CHECK_IB) > 0)
 	{
 		$ERROR = array('PROGRESS' => '30', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_IB_TYPES") . ": " . implode(',',$CHECK_IB));
 	}
-	/* Проверка ключа для ReCrm */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ ReCrm */
 	elseif($GET_KEY == '')
 	{
 		$ERROR = array('PROGRESS' => '60', 'MESSAGE' => GetMessage("PR_RECRM_ERR_NOT_FOUND_KEY"));
 	}
-	/* Проверка указанного ключа для ReCrm */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ ReCrm */
 	elseif($CHECK_KEY === false)
 	{
 		$ERROR = array('PROGRESS' => '95', 'MESSAGE' => GetMessage("PR_RECRM_ERR_BAD_KEY"));
 	}
 
-	/* Получим данные из ReCrm */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ReCrm */
 	if($ACTION == 'MakeTmpData' AND count($ERROR) == 0 AND !defined("PR_RECRM_CLOSE"))
 	{
 		$MakeTmpData = $RECRM->MakeTmpData();
@@ -180,7 +182,7 @@ if($RIGHT=="W")
 		}
 	}
 
-	/* Импорт из временных файлов */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
 	if($ACTION == 'ImportStart' AND count($ERROR) == 0 AND !defined("PR_RECRM_CLOSE"))
 	{
 		$STATUS = $RECRM->importIBEl(0, $_GET['start']);
@@ -206,7 +208,7 @@ if($RIGHT=="W")
 		}
 	}
 
-	/* Удаление временного файла */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
 	if($ACTION == 'tmpDbDelete' AND count($ERROR) == 0)
 	{
 		$TMP_DB_HASH = $_GET['tmpDbHash'];
@@ -233,7 +235,7 @@ $tabControl->Begin();
 /* Tab Index */
 $tabControl->BeginNextTab();
 
-	if(count($ERROR) > 0) /* Ошибки */
+	if(count($ERROR) > 0) /* пїЅпїЅпїЅпїЅпїЅпїЅ */
 	{
 		echo CAdminMessage::ShowMessage(array(
 			"MESSAGE" 			=> $ERROR['MESSAGE'],

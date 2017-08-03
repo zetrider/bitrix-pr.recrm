@@ -27,6 +27,8 @@ class prReCrmData
 			'pr_recrm_s_step'        => '',
 			'pr_recrm_img_w'         => '',
 			'pr_recrm_img_h'         => '',
+			'pr_recrm_img_estate_w'  => '',
+			'pr_recrm_img_estate_h'  => '',
 			'pr_recrm_img_crop'      => '',
 			'pr_recrm_img_wrk'       => '',
 			'pr_recrm_search_hidden' => '',
@@ -62,6 +64,10 @@ class prReCrmData
 			elseif($KEY == 'pr_recrm_img_w' OR $KEY == 'pr_recrm_img_h'):
 
 				$RES = intval($RES) <= 0 ? 200 : $RES;
+
+            elseif($KEY == 'pr_recrm_img_estate_w' OR $KEY == 'pr_recrm_img_estate_h'):
+
+            	$RES = intval($RES) <= 0 ? 1000 : $RES;
 
 			elseif($KEY == 'pr_recrm_img_crop' OR $KEY == 'pr_recrm_img_wrk' OR $KEY == 'pr_recrm_search_hidden' OR $KEY == 'pr_recrm_search_status'):
 
@@ -152,6 +158,14 @@ class prReCrmData
 		);
 	}
 
+	/* Размеры для фото */
+	public function getEstateSize()
+	{
+		return array(
+			'width' 	=> $this->getParams(array('TYPE' => 'pr_recrm_img_estate_w')),
+			'height' 	=> $this->getParams(array('TYPE' => 'pr_recrm_img_estate_h')),
+		);
+	}
 	/* Кадрирование главного фото */
 	public function getCrop()
 	{
@@ -1032,9 +1046,10 @@ class prReCrmData
 					elseif($TYPE_KEY == 'estate')
 					{
 						$getCoverSize = $this->getCoverSize();
+						$getEstateSize = $this->getEstateSize();
 						$PROP['estatecoverphoto'] 	= $this->convertArrImport('estatecoverphoto',$this->getJson('estatecoverphoto', array('estate_id' => $CRM_ID, 'width' => $getCoverSize['width'], 'height' => $getCoverSize['height'], 'crop' => $this->getCrop(), 'watermark' => $this->getWRK())));
-						$PROP['estatephoto'] 		= $this->convertArrImport('estatephoto',$this->getJson('estatephoto', array('estate_id' => $CRM_ID, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
-						$PROP['estatephotolayout'] 	= $this->convertArrImport('estatephotolayout',$this->getJson('estatephotolayout', array('estate_id' => $CRM_ID, 'width' => '800', 'height' => '600', 'crop' => '0', 'watermark' => $this->getWRK())));
+						$PROP['estatephoto'] 		= $this->convertArrImport('estatephoto',$this->getJson('estatephoto', array('estate_id' => $CRM_ID, 'width' => $getEstateSize['width'], 'height' => $getEstateSize['height'], 'crop' => '0', 'watermark' => $this->getWRK())));
+						$PROP['estatephotolayout'] 	= $this->convertArrImport('estatephotolayout',$this->getJson('estatephotolayout', array('estate_id' => $CRM_ID, 'width' => $getEstateSize['width'], 'height' => $getEstateSize['height'], 'crop' => '0', 'watermark' => $this->getWRK())));
 						if($PROP['edit_date'] == '') 		$PROP['edit_date'] 		= $PROP['creation_date'];
 						if($PROP['edit_datetime'] == '') 	$PROP['edit_datetime'] 	= $PROP['creation_datetime'];
 					}
