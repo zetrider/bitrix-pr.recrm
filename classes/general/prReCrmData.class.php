@@ -532,6 +532,7 @@ class prReCrmData
 	public function convertKeyProp($key = '') {
 		$key = strtolower($key);
 		$key = preg_replace("/[^a-z0-9_]/", "", $key);
+		$key = substr($key, 0, 50);
 		return $key;
 	}
 
