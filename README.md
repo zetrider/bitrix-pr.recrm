@@ -157,6 +157,25 @@ function prOnBeforeGetSettings($arData = array())
 </pre>
 <br>
 
+<strong>—обытие OnAfterCheckResponse </strong><br>
+—рабатывает после проверки валидного ответа от CRM перед формированием данных. ≈сли Api CRM вернул не json, формирование данных будет прервано, импорт не будет запущен.<br>
+<br>
+<i>—обытие содержит массив данных:</i><br>
+res (bool) - результат проверки<br>
+type (string) - тип запроса<br>
+params (array) - массив с параметрами запроса<br>
+<br>
+
+<strong>—обытие OnAfterGetJson </strong><br>
+≈сли константа PR_RECRM_DEBUG_QUERY определена, срабатывает после каждого запроса к апи.
+<br>
+<i>—обытие содержит массив данных:</i><br>
+type (string) - тип запроса<br>
+url (string) - адрес запроса<br>
+vars (array) - массив с параметрами запроса<br>
+response (mixed) - ответ от апи<br>
+<br>
+
 <strong> ороткие ссылки $prReCrmProps->redirect()</strong><br>
 ѕозвол€ет перенаправить пользовател€ по ссылке вида http://site.ru/?recrm=12345 на страницу объекта. ћетод размещен в классе prReCrmData в файле /classes/general/prReCrmData.class.php<br>
 <br>

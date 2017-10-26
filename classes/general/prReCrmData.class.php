@@ -345,6 +345,21 @@ class prReCrmData
 			$data = file_get_contents($url, false, $context);
 		}
 
+		if(defined("PR_RECRM_DEBUG_QUERY"))
+		{
+			$rsHandlers = GetModuleEvents(self::$module_id, "OnAfterGetJson");
+			while($arHandler = $rsHandlers->Fetch())
+			{
+				$forEvent = array(
+					'type'     => $type,
+					'url'      => $url,
+					'vars'     => $vars,
+					'response' => $data,
+				);
+				$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
+			}
+		}
+
 		$j_arr 	= json_decode($data, true);
 
 		if(SITE_CHARSET == "UTF-8" OR SITE_CHARSET == "utf-8"):
@@ -695,11 +710,39 @@ class prReCrmData
 		endif;
 	}
 
+	public function CheckResponse($response = null, $type = null, $params = array())
+	{
+		$res = true;
+		if(is_null($response))
+		{
+			if(defined("PR_RECRM_DEBUG"))
+			{
+				AddMessage2Log('WARNING: Bad response for '.$type.' from Api');
+			}
+
+			$res = false;
+		}
+
+		$rsHandlers = GetModuleEvents(self::$module_id, "OnAfterCheckResponse");
+		while($arHandler = $rsHandlers->Fetch())
+		{
+			$forEvent = array(
+				'res'    => $res,
+				'type'   => $type,
+				'params' => $params,
+			);
+			$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
+		}
+
+		return $res;
+	}
+
 	/* Создаем массив с ID для импорта */
 	public function MakeTmpData($arParams = array())
 	{
 		date_default_timezone_set($this->getTZ());
 
+		$result     = false;
 		$UPD_TIME 	= time();
 		$RECRM_KEY 	= $this->getKey();
 		$FILE_NAME 	= 'recrm_'.$UPD_TIME.'_'.md5($RECRM_KEY);
@@ -720,8 +763,7 @@ class prReCrmData
 			$TYPES_ARR [] = $T_V;
 		}
 
-		/* Обновляем дату последнего запроса к CRM для последющего поиска обновленных объектов */
-		COption::SetOptionString(self::$module_id, 'pr_recrm_last_load', $UPD_TIME);
+		$valid_data = true;
 
 		/* Создаем массив данных для каждого типа */
 		foreach($TYPES_ARR AS $TYPE)
@@ -736,8 +778,8 @@ class prReCrmData
 			$json_type 		= $TYPE;
 			if($TYPE == 'estate')
 			{
-				$json_type 		= 'estatesearch';
-				$json_params 	= array('search_hidden' => $this->getSH(), 'start' => '0', 'count' => '10000000');
+				$json_type   = 'estatesearch';
+				$json_params = array('search_hidden' => $this->getSH(), 'start' => '0', 'count' => '10000000');
 			}
 			elseif($TYPE == 'contragent')
 			{
@@ -753,16 +795,31 @@ class prReCrmData
 				$json_params_status = $json_params;
 
 				$json_params_status['status'] = '1';
-				$json_res_s1 	= $this->getJson($json_type, $json_params_status);
-				$ReCrmIDsS1 	= $this->convertArrCheck($json_type, $json_res_s1);
+				$json_res_s1 = $this->getJson($json_type, $json_params_status);
+				if(!$this->CheckResponse($json_res_s1, $json_type, $json_params_status))
+				{
+					$valid_data = false;
+					break;
+				}
+				$ReCrmIDsS1  = $this->convertArrCheck($json_type, $json_res_s1);
 
 				$json_params_status['status'] = '2';
-				$json_res_s2 	= $this->getJson($json_type, $json_params_status);
-				$ReCrmIDsS2 	= $this->convertArrCheck($json_type, $json_res_s2);
+				$json_res_s2 = $this->getJson($json_type, $json_params_status);
+				if(!$this->CheckResponse($json_res_s2, $json_type, $json_params_status))
+				{
+					$valid_data = false;
+					break;
+				}
+				$ReCrmIDsS2  = $this->convertArrCheck($json_type, $json_res_s2);
 			}
 
 			/* Запрос */
-			$json_res 		= $this->getJson($json_type, $json_params);
+			$json_res = $this->getJson($json_type, $json_params);
+			if(!$this->CheckResponse($json_res, $json_type, $json_params))
+			{
+				$valid_data = false;
+				break;
+			}
 			$ReCrmIDs 		= $this->convertArrCheck($json_type, $json_res) + $ReCrmIDsS1 + $ReCrmIDsS2;
 			$ReCrmIDsUpd 	= $ReCrmIDs;
 
@@ -780,14 +837,29 @@ class prReCrmData
 
 					$json_params_status['status'] = '1';
 					$json_res_s1 	= $this->getJson($json_type, $json_params_status);
+					if(!$this->CheckResponse($json_res_s1, $json_type, $json_params_status))
+					{
+						$valid_data = false;
+						break;
+					}
 					$ReCrmIDsS1 	= $this->convertArrCheck($json_type, $json_res_s1);
 
 					$json_params_status['status'] = '2';
 					$json_res_s2 	= $this->getJson($json_type, $json_params_status);
+					if(!$this->CheckResponse($json_res_s2, $json_type, $json_params_status))
+					{
+						$valid_data = false;
+						break;
+					}
 					$ReCrmIDsS2 	= $this->convertArrCheck($json_type, $json_res_s2);
 				}
 
 				$json_res_upd 	= $this->getJson($json_type, $json_params);
+				if(!$this->CheckResponse($json_res_upd, $json_type, $json_params))
+				{
+					$valid_data = false;
+					break;
+				}
 				$ReCrmIDsUpd 	= $this->convertArrCheck($json_type, $json_res_upd) + $ReCrmIDsS1 + $ReCrmIDsS2;
 			}
 
@@ -795,22 +867,7 @@ class prReCrmData
 			$DBArr 	= $this->getEliB($IBLOCK_ID);
 
 			/* Ищем элементы, которые нужно удалить, которых нет в CRM но есть в БД */
-			$DEL 	= array();
-			/* На случай, если упала CRM и не получено ни одного объекта */
-			if(count($ReCrmIDs) > 0)
-			{
-				$DEL = array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
-			}
-			/* Если на удаление объектов много, не удалять: TODO исправить костыль */
-			$HALF_COUNT = count($DBArr['id_btrx']) / 2;
-			if(count($DEL) >= $HALF_COUNT)
-			{
-				if(defined("PR_RECRM_DEBUG"))
-				{
-					AddMessage2Log('WARNING: To remove: ' . count($DEL));
-				}
-				$DEL = array();
-			}
+			$DEL = array_diff_assoc($DBArr['id_recrm'], $ReCrmIDs);
 
 			/* Ищем элементы, которые нужно добавить, которых нет в БД но есть в CRM */
 			$NEW 	= array();
@@ -829,31 +886,39 @@ class prReCrmData
 			);
 		}
 
-		$FILES_TYPE = $arParams['CRON'] == 'Y' ? 'CRON' : 'SITE';
-
-		/* От дублей */
-		$arHASH = $arData;
-		unset($arHASH['UPDATE_TIME']);
-		$HASH = md5(serialize($arHASH));
-
-		/* Список файлов в очереди */
-		$FILES = $this->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
-		if (array_key_exists($HASH, $FILES[$FILES_TYPE]))
+		if($valid_data === true)
 		{
-			return false;
-		}
-		else
-		{
-			/* Создаем временный файл */
-			$this->TmpDb(array('TYPE' => 'W', 'FILE' => $FILE_NAME, 'DATA' => $arData));
+			/* Обновляем дату последнего запроса к CRM для последющего поиска обновленных объектов */
+			COption::SetOptionString(self::$module_id, 'pr_recrm_last_load', $UPD_TIME);
 
-			/* Добавляем в список очереди новый файл */
-			$FILES [$FILES_TYPE][$HASH] = $FILE_NAME;
-			$this->TmpDb(array('TYPE' => 'W', 'FILE' => 'recrm_files', 'DATA' => $FILES));
+			$FILES_TYPE = $arParams['CRON'] == 'Y' ? 'CRON' : 'SITE';
 
-			/* Возвращаем данные занесенные в файл */
-			return $arData;
+			/* От дублей */
+			$arHASH = $arData;
+			unset($arHASH['UPDATE_TIME']);
+			$HASH = md5(serialize($arHASH));
+
+			/* Список файлов в очереди */
+			$FILES = $this->TmpDb(array('TYPE' => 'R', 'FILE' => 'recrm_files'));
+			if(array_key_exists($HASH, $FILES[$FILES_TYPE]))
+			{
+				$result = false;
+			}
+			else
+			{
+				/* Создаем временный файл */
+				$this->TmpDb(array('TYPE' => 'W', 'FILE' => $FILE_NAME, 'DATA' => $arData));
+
+				/* Добавляем в список очереди новый файл */
+				$FILES [$FILES_TYPE][$HASH] = $FILE_NAME;
+				$this->TmpDb(array('TYPE' => 'W', 'FILE' => 'recrm_files', 'DATA' => $FILES));
+
+				/* Возвращаем данные занесенные в файл */
+				$result = $arData;
+			}
 		}
+
+		return $result;
 	}
 
 	/* Импорт */
