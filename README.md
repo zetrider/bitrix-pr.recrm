@@ -86,6 +86,9 @@ TYPE (text) - тип выгружаемого объекта<br>
 NEW (bool) - новый или обновляемый объект<br>
 PARAMS (array) - массив с данными (MODIFIED_BY, IBLOCK_ID, NAME, CODE, DETAIL_TEXT, DETAIL_TEXT_TYPE)<br>
 PROP (array) - массив со свойствами элемента где ключ - имя свойства, значение - значение.<br>
+IBLOCK_ID (int) - IBLOCK ID
+CRM_ID (int) - CRM ID
+ELEMENT_ID (int/null) - ELEMENT ID - ID или null
 <br>
 <i>Должно вернуть массив с:</i><br>
 PARAMS (array) - параметры элемента<br>
@@ -202,3 +205,4 @@ function ReCRM_redirect()
 <i>PR_RECRM_CLOSE</i> - если константа определена, содержимое константы будет отображено на месте кнопок для выгрузки во вкладке "Статистика". Например, если необходимо ограничить выгрузку только по CRON.<br>
 <i>PR_RECRM_CLOSE_OPTIONS</i> - если константа определена, содержимое константы будет отображено в верхней части вкладки "Настройки".<br>
 <i>PR_RECRM_DEBUG</i> - если константа определена, в лог файл (AddMessage2Log) будут добавлены все шаги процесса выгрузки.<br>
+<i>PR_RECRM_DEBUG_QUERY</i> - если константа определена, будет доступ к работе с событием OnAfterGetJson<br>

@@ -1143,17 +1143,34 @@ class prReCrmData
 
 					/*
 					Callback
+						@TYPE
 						has params TYPE - text, NEW - bool, PARAMS - arr, PROP - arr
 						should return the array('PARAMS' => $arEL, 'PROPS' => $PROP);
+					*/
+
+					/**
+					* Callback
+					*
+					* @param string $TYPE - Тип данных
+					* @param bool $NEW - новый объект
+					* @param array $PARAMS - Параметры элемента
+					* @param array $PROP - Сформированные свойства элемента
+					* @param int $IBLOCK_ID - IBLOCK ID
+					* @param int $CRM_ID - CRM ID
+					* @param mixed $ELEMENT_ID - ELEMENT ID - ID или null
+					* @return array - массив
 					*/
 					$rsHandlers = GetModuleEvents(self::$module_id, "OnBeforeImport");
 					while($arHandler = $rsHandlers->Fetch())
 					{
 						$forEvent = array(
-							'TYPE' 		=> $TYPE_KEY,
-							'NEW' 		=> in_array($CRM_ID, $DATA['DATA'][$TYPE_KEY]['NEW']),
-							'PARAMS' 	=> $arEL,
-							'PROP' 		=> $PROP,
+							'TYPE'       => $TYPE_KEY,
+							'NEW'        => in_array($CRM_ID, $DATA['DATA'][$TYPE_KEY]['NEW']),
+							'PARAMS'     => $arEL,
+							'PROP'       => $PROP,
+							'IBLOCK_ID'  => $IBLOCK_ID,
+							'CRM_ID'     => $CRM_ID,
+							'ELEMENT_ID' => $DB_ID,
 						);
 						$resEvent = ExecuteModuleEvent($arHandler, $forEvent);
 						$arEL = $resEvent['PARAMS'];
